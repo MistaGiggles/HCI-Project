@@ -34,7 +34,7 @@ public class LABELTEST extends javax.swing.JFrame {
         imagePanel1.loadImage("image.jpg");
         jToolBar1.setSize(100, 100);
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Root Node");
-        TreeModel treeModel = new DefaultTreeModel(rootNode);
+        MyTreeModel treeModel = new MyTreeModel(rootNode);
         //DefaultMutableTreeNode category = new DefaultMutableTreeNode("Books for Java Programmers");
         //rootNode.add(category);
         
@@ -73,12 +73,12 @@ public class LABELTEST extends javax.swing.JFrame {
                             tree, value, sel,
                             expanded, leaf, row,
                             hasFocus);
-            if (leaf) {
-                
-                setToolTipText("This book is in the Tutorial series.");
-            } else {
-                setToolTipText("TOOLTIP!"); //no tool tip
-            }
+            
+            
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode)value;
+            Object po =  (Object)(node.getUserObject());
+            //PolygonObject a = (PolygonObject) po;
+            
             //PolygonObject po = (PolygonObject) value;
             
             //setIcon(new ImageIcon(generateIcon(po.color.getRed(),po.color.getGreen(),po.color.getBlue())));

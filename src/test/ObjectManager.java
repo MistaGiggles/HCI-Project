@@ -28,13 +28,22 @@ public class ObjectManager {
     public void addObject(PolygonObject po) {
         
         objects.add(po);
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(po.getName());
-        //node.setUserObject(po);
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(po);
+        node.setUserObject(po);
         
         tree.add(node);
         
         
         update();
+    }
+    
+    public PolygonObject isTouch(int mx, int my) {
+        for(PolygonObject po : objects) {
+            if(po.isTouching(mx, my)) {
+                return po;
+            }
+        }
+        return null;
     }
     
     public void update() {
