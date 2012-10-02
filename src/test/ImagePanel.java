@@ -155,9 +155,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                     po.draw(g);
                 }
                 
-                for(PolygonObject O : manager.objects) {
-                    O.draw(g);
-                }
+                
 		
 		
 	}

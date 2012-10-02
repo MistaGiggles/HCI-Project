@@ -29,9 +29,7 @@ public class Form1 extends javax.swing.JPanel {
         initComponents();
         
         imagePanel1.loadImage("image.jpg");
-        imagePanel1.manger = new ObjectManager();
-        imagePanel1.manager.tree = jTree1;
-        
+ 
         
         
     }
