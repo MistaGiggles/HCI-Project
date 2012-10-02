@@ -111,6 +111,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                             po.setName("DEFAULT");
                             manager.addObject(po);
                             po = null;
+                            mode = Mode.AddPoly;
                             
                         } else {
                             po.addPoint(e.getX(), e.getY());
@@ -145,15 +146,26 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     @Override
 	public void paint(Graphics g) {
 		super.paint(g);
-				
+		
+                
+                
 		if (image != null) {
 			g.drawImage(
 					image, 0, 0, null);
 		}
+                
+                if(manager!=null) {
+                    for(PolygonObject O : manager.objects) {
+                        O.draw(g);
+                    }
+                }
+                
                 if(po!=null)
                 {
                     po.draw(g);
                 }
+                
+                
                 
                 
 		
