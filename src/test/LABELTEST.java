@@ -78,6 +78,10 @@ public class LABELTEST extends javax.swing.JFrame {
         jButton1.setEnabled(false);
         jMenuItem1.setEnabled(false);
 */
+
+    private void quit() {
+        System.exit(0);  // Should have a 'Quit without saving?' dialogue box
+    }
     
     
     private class MyRenderer extends DefaultTreeCellRenderer {
@@ -85,7 +89,7 @@ public class LABELTEST extends javax.swing.JFrame {
         ObjectManager manager;
         public MyRenderer(ObjectManager mng) {
             manager = mng;
-        }
+        } // Should have a 'Quit without saving?' dialogue box
         @Override
         public Component getTreeCellRendererComponent(
                             JTree tree,
@@ -159,6 +163,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         imagePanel1 = new test.ImagePanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
@@ -243,6 +248,17 @@ public class LABELTEST extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButton6);
+
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/quit_small.png"))); // NOI18N
+        jButton7.setFocusable(false);
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton7);
 
         org.jdesktop.layout.GroupLayout imagePanel1Layout = new org.jdesktop.layout.GroupLayout(imagePanel1);
         imagePanel1.setLayout(imagePanel1Layout);
@@ -419,9 +435,12 @@ public class LABELTEST extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0); // Should have a 'Quit without saving?' dialogue box
+        quit();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        quit();
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -467,6 +486,7 @@ public class LABELTEST extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
