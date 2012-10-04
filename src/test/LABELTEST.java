@@ -45,7 +45,7 @@ public class LABELTEST extends javax.swing.JFrame {
         
         jTree1.setModel(treeModel);
         jTree1.setCellRenderer(new MyRenderer(imagePanel1.manager));
-        
+        jTree1.addTreeSelectionListener(new MyTreeListener(imagePanel1.manager, jTree1));
         
         imagePanel1.manager.setWorkingTree(rootNode);
         imagePanel1.manager.jt = jTree1;

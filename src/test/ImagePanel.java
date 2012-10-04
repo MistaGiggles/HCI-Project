@@ -53,7 +53,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
             }
         };
 
-        new Timer(400, taskPerformer).start();
+        new Timer(100, taskPerformer).start();
         
         
         
@@ -145,7 +145,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 break;
                 
             case EditPoly:
-                
+                    
                 
                 
                 break;
