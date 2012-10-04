@@ -87,7 +87,8 @@ public class PolygonObject {
         g2.setStroke(new BasicStroke(7.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,10.0f));
 
         if(points.size() == 1) {
-            g2.drawLine(points.get(0) .x,points.get(0).y, temp.x, temp.y);
+            if(temp != null)
+                g2.drawLine(points.get(0) .x,points.get(0).y, temp.x, temp.y);
             return;
         }
         if(poly == null) {
