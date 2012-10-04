@@ -39,12 +39,12 @@ public class LABELTEST extends javax.swing.JFrame {
         //rootNode.add(category);
         
         
-        
+        imagePanel1.manager = new ObjectManager();
         
         jTree1.setModel(treeModel);
-        jTree1.setCellRenderer(new MyRenderer());
+        jTree1.setCellRenderer(new MyRenderer(imagePanel1.manager));
         
-        imagePanel1.manager = new ObjectManager();
+        
         imagePanel1.manager.setWorkingTree(rootNode);
         imagePanel1.manager.jt = jTree1;
         
@@ -55,9 +55,9 @@ public class LABELTEST extends javax.swing.JFrame {
     
     private class MyRenderer extends DefaultTreeCellRenderer {
         
- 
-        public MyRenderer() {
-            
+        ObjectManager manager;
+        public MyRenderer(ObjectManager mng) {
+            manager = mng;
         }
         @Override
         public Component getTreeCellRendererComponent(
@@ -76,13 +76,18 @@ public class LABELTEST extends javax.swing.JFrame {
             
             
             DefaultMutableTreeNode node = (DefaultMutableTreeNode)value;
-            Object po =  (Object)(node.getUserObject());
+            //Object po =  (Object)(node.getUserObject());
+            Object nodeObj = ((DefaultMutableTreeNode)value).getUserObject();
+            PolygonObject po = manager.get(nodeObj.hashCode());
+            
+            
+            //((PolygonObject)nodeObj).getColor();
             //PolygonObject a = (PolygonObject) po;
             
             //PolygonObject po = (PolygonObject) value;
-            
-            //setIcon(new ImageIcon(generateIcon(po.color.getRed(),po.color.getGreen(),po.color.getBlue())));
- 
+            if(po != null) {
+                setIcon(new ImageIcon(generateIcon(po.color.getRed(),po.color.getGreen(),po.color.getBlue())));
+            }
             return this;
         }
         
@@ -93,8 +98,12 @@ public class LABELTEST extends javax.swing.JFrame {
             for(int y = 0; y < image.getHeight(); y++) {
                 for(int x = 0; x < image.getWidth(); x++) {
                     Color imageColor = new Color(r,g,b);
+                    Color white = new Color(255,255,255);
                     //mix imageColor and desired color 
-                    image.setRGB(x, y, imageColor.getRGB());
+                    if(Math.pow(x-8,2) + Math.pow(y-8,2) < 64)
+                        image.setRGB(x, y, imageColor.getRGB());
+                    else
+                        image.setRGB(x,y, white.getRGB());
                 }
             }
             return image;

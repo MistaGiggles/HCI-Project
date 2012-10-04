@@ -16,9 +16,11 @@ public class ObjectManager {
     ArrayList<PolygonObject> objects;
     DefaultMutableTreeNode tree;
     JTree jt;
+    int newID;
     
     public ObjectManager() {
         objects = new ArrayList<PolygonObject>();
+        newID = 1;
     }
     
     public void setWorkingTree(DefaultMutableTreeNode t) {
@@ -29,12 +31,42 @@ public class ObjectManager {
         
         objects.add(po);
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(po);
-        node.setUserObject(po);
-        
+        //node.setUserObject(po);
+        po.setID(newID);
         tree.add(node);
         
         
         update();
+    }
+    
+    public void select(PolygonObject p) {
+        for(PolygonObject O : objects) {
+            O.deSelect();
+        }
+        
+        for(PolygonObject O : objects) {
+            if(O.equals(p)) {
+                p.select();
+            }
+        }
+    }
+    
+    public PolygonObject getSelected() {
+        for(PolygonObject O :objects) {
+            if(O.isSelected()) {
+                return O;
+            }
+        }
+        return null;
+    }
+    
+    public PolygonObject get(int hash) {
+        for(PolygonObject O : objects) {
+            if(O.hashCode() == hash) {
+                return O;
+            }
+        }
+        return null;
     }
     
     public PolygonObject isTouch(int mx, int my) {

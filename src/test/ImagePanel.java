@@ -6,6 +6,8 @@ package test;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  *
@@ -31,6 +34,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     Point first;
     ObjectManager manager;
     PolygonObject highlight;
+    PolygonObject selected;
     
     int i = 0;
     
@@ -41,7 +45,15 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         mode = Mode.AddPoly;
         addMouseListener(this);
         addMouseMotionListener(this);
+        final ImagePanel p = this;
         
+        ActionListener taskPerformer = new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+                p.repaint();
+            }
+        };
+
+        new Timer(400, taskPerformer).start();
         
         
         
@@ -64,6 +76,8 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         
         this.repaint();
     }
+    
+    
     
     @Override
     public void mouseDragged(MouseEvent e)
@@ -116,6 +130,8 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                             mode = Mode.View;
                             po.setName("DEFAULT");
                             manager.addObject(po);
+                            manager.select(po);
+                            selected = manager.getSelected();
                             po = null;
                             mode = Mode.AddPoly;
                             

@@ -24,6 +24,8 @@ public class PolygonObject {
     private String name;
     public Point temp;
     public boolean isValid;
+    private int _id;
+    private boolean isSelected;
     
     public PolygonObject() {
         
@@ -38,13 +40,39 @@ public class PolygonObject {
         name = _name;
     }
     
+    public boolean isSelected() {
+        return isSelected;
+    }
+    
+    public void select() {
+        isSelected = true;
+    }
+    
+    public void deSelect() {
+        isSelected = false;
+    }
+    
     public String getName() {
         return name;
+    }
+    
+    public void setID(int i) {
+        
+        _id = i;
     }
     
     public void setColor(int r, int g, int b) {
         color = new Color(r,g,b);
    
+    }
+    
+    public Color getColor() {
+        return color;
+    }
+    
+    public int getID() {
+        return _id;
+        
     }
     
     public String toString() {
@@ -87,13 +115,26 @@ public class PolygonObject {
         } else {
             g.setColor(color);
             
-            g2.setStroke(new BasicStroke(9.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,10.0f));
+            g2.setStroke(new BasicStroke(6.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,8.0f));
             
             g2.drawPolygon(poly);
             g2.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 100));
-            if(shade)
-                g2.fillPolygon(poly);
             
+                
+            
+        }
+        
+        if(isSelected) {
+            g2.fillPolygon(poly);
+            for(Point p : points) {
+                
+                g2.setColor(color);
+                g2.fillOval(p.x - 6, p.y -6 , 12, 12);
+                g2.setColor(new Color(255-color.getRed(), 255-color.getGreen(), 255-color.getBlue()));
+                g2.drawOval(p.x -6, p.y -6, 12, 12);
+                
+                
+            }
         }
         
     }
