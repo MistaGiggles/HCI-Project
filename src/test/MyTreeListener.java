@@ -4,9 +4,10 @@
  */
 package test;
 
+import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -15,29 +16,25 @@ import javax.swing.tree.TreePath;
 public class MyTreeListener implements TreeSelectionListener {
     
     ObjectManager manager;
+    JTree tree;
     
-    public MyTreeListener(ObjectManager mngr) {
+    public MyTreeListener(ObjectManager mngr, JTree _tree) {
         manager = mngr;
+        tree = _tree;
     }
     
     @Override
     public void valueChanged(TreeSelectionEvent tse) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-        // Get all nodes whose selection status has changed
-		TreePath[] paths = tse.getPaths();
- 
-		// Iterate through all affected nodes
-		for (int i=0; i<paths.length; i++) {
-			if (tse.isAddedPath(i)) {
-				// This node has been selected
-				//System.out.println(paths[i].getLastPathComponent().toString());
-                                
-				break;
-			} else {
-				// This node has been deselected
-				break;
-			}
-		}
+         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+         
+
+    /* if nothing is selected */ 
+        if (node == null) return;
+
+    /* retrieve the node that was selected */ 
+        Object nodeInfo = node.getUserObject();
+        
+        manager.select(manager.get(nodeInfo.hashCode()));
     }
     
 }
