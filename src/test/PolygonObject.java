@@ -47,7 +47,12 @@ public class PolygonObject {
    
     }
     
-    public void draw(Graphics g)
+    public String toString() {
+        
+        return name;
+    }
+    
+    public void draw(Graphics g, boolean shade)
     {
         g.setColor(color);
         Graphics2D g2 = (Graphics2D) g;
@@ -86,10 +91,28 @@ public class PolygonObject {
             
             g2.drawPolygon(poly);
             g2.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 100));
-            g2.fillPolygon(poly);
+            if(shade)
+                g2.fillPolygon(poly);
             
         }
         
+    }
+    
+    public boolean isTouching(int mx, int my) {
+        Point prev = null;
+        for(Point p : points) {
+            if(prev!=null) {
+                double res = 100;
+                //double res = (double)(((double)mx-(double)prev.x)*((double)p.x-(double)prev.x) + ((double)my-(double)prev.y)*((double)p.y-(double)prev.y))/Math.pow(((double)prev.x-(double)p.x)*((double)prev.x-(double)p.x) + ((double)prev.y-(double)p.y)*((double)prev.y-(double)p.y), 2);
+                if(res<7) {
+                    System.out.println("Highlight + " + res);
+                    return true;
+                }
+            
+            }
+            prev = p;
+        }
+        return false;
     }
     
     public void addPoint(int _x, int _y) {

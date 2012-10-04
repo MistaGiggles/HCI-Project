@@ -30,6 +30,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     Mode mode;
     Point first;
     ObjectManager manager;
+    PolygonObject highlight;
     
     int i = 0;
     
@@ -56,6 +57,11 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
             
             
         }
+        
+        // do detection for "selected" object
+        highlight = manager.isTouch(e.getX(), e.getY());
+        
+        
         this.repaint();
     }
     
@@ -156,17 +162,19 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 
                 if(manager!=null) {
                     for(PolygonObject O : manager.objects) {
-                        O.draw(g);
+                        O.draw(g, false);
                     }
                 }
                 
                 if(po!=null)
                 {
-                    po.draw(g);
+                    po.draw(g, false);
                 }
                 
                 
-                
+                if(highlight != null) {
+                    highlight.draw(g,true);
+                }
                 
 		
 		
