@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JTree;
@@ -48,7 +49,6 @@ public class LABELTEST extends javax.swing.JFrame {
         
         imagePanel1.manager.setWorkingTree(rootNode);
         imagePanel1.manager.jt = jTree1;
-        
     }
 
     private void open() {
@@ -64,7 +64,7 @@ public class LABELTEST extends javax.swing.JFrame {
     }
 
     private void save() {
-        JFileChooser c = new JFileChooser();
+      JFileChooser c = new JFileChooser();
       int rVal = c.showSaveDialog(LABELTEST.this);
       if (rVal == JFileChooser.APPROVE_OPTION) {
         filepath = (c.getSelectedFile().getPath());
@@ -74,7 +74,14 @@ public class LABELTEST extends javax.swing.JFrame {
       }
     }
     
-    
+/*      HOW TO GREYSCALE BUTTONS
+        jButton1.setEnabled(false);
+        jMenuItem1.setEnabled(false);
+*/
+
+    private void quit() {
+        System.exit(0);  // Should have a 'Quit without saving?' dialogue box
+    }
     
     
     private class MyRenderer extends DefaultTreeCellRenderer {
@@ -82,7 +89,7 @@ public class LABELTEST extends javax.swing.JFrame {
         ObjectManager manager;
         public MyRenderer(ObjectManager mng) {
             manager = mng;
-        }
+        } // Should have a 'Quit without saving?' dialogue box
         @Override
         public Component getTreeCellRendererComponent(
                             JTree tree,
@@ -156,6 +163,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         imagePanel1 = new test.ImagePanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
@@ -163,6 +171,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -200,35 +209,66 @@ public class LABELTEST extends javax.swing.JFrame {
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton3);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/zoomout_small.png"))); // NOI18N
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton4);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/undo_small.png"))); // NOI18N
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton5);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/redo_small.png"))); // NOI18N
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton6);
+
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/quit_small.png"))); // NOI18N
+        jButton7.setFocusable(false);
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton7);
 
         org.jdesktop.layout.GroupLayout imagePanel1Layout = new org.jdesktop.layout.GroupLayout(imagePanel1);
         imagePanel1.setLayout(imagePanel1Layout);
         imagePanel1Layout.setHorizontalGroup(
             imagePanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 762, Short.MAX_VALUE)
+            .add(0, 750, Short.MAX_VALUE)
         );
         imagePanel1Layout.setVerticalGroup(
             imagePanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 0, Short.MAX_VALUE)
+            .add(0, 609, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(jTree1);
@@ -255,6 +295,16 @@ public class LABELTEST extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/quit_small.png"))); // NOI18N
+        jMenuItem7.setText("Quit");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem7);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -262,6 +312,11 @@ public class LABELTEST extends javax.swing.JFrame {
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/undo_small.png"))); // NOI18N
         jMenuItem3.setText("Undo");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
@@ -291,6 +346,11 @@ public class LABELTEST extends javax.swing.JFrame {
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/run_small.png"))); // NOI18N
         jMenuItem6.setText("Run tutorial");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);
@@ -303,9 +363,10 @@ public class LABELTEST extends javax.swing.JFrame {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(layout.createSequentialGroup()
+                .addContainerGap()
                 .add(imagePanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -348,6 +409,38 @@ public class LABELTEST extends javax.swing.JFrame {
         // Action for save icon in file menu
         save();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        quit();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        quit();
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -393,6 +486,7 @@ public class LABELTEST extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -403,6 +497,7 @@ public class LABELTEST extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTree jTree1;
