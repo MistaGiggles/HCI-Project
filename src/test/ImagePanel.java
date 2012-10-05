@@ -85,7 +85,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void mouseDragged(MouseEvent e)
     {  
-        if(e.getButton() == MouseEvent.BUTTON1) {
+        
             switch(mode) {
                case EditPoly:
 
@@ -98,7 +98,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                    break;
 
             }
-        }
+        
          //this.repaint();
     }
     
@@ -144,6 +144,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         if(e.getButton() == MouseEvent.BUTTON1) {
             switch(mode) {
                 case EditPoly:
+                    System.out.println("ASDASD");
                         if(selected != null) {
                             boolean near = false;
                             //double closest = 20000;
@@ -237,7 +238,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                         break;  
 
                 case Limbo:
-                        mode = Mode.Limbo2;
+                        mode = Mode.AddPoly;
                         break;
 
 
