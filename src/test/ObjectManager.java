@@ -5,6 +5,7 @@
 package test;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
@@ -33,6 +34,9 @@ public class ObjectManager {
     }
     
     public void addObject(PolygonObject po) {
+        
+        String name =  JOptionPane.showInputDialog ( "Enter object name:" ); 
+        po.setName(name);
         
         objects.add(po);
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(po);
