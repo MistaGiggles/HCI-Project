@@ -9,8 +9,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class PolygonObject {
     
-    private ArrayList<Point> points;
+    public ArrayList<Point> points;
     private Polygon poly;
     public Color color;
     private String name;
@@ -26,6 +26,7 @@ public class PolygonObject {
     public boolean isValid;
     private int _id;
     private boolean isSelected;
+    public DefaultMutableTreeNode node;
     
     public PolygonObject() {
         
@@ -38,6 +39,10 @@ public class PolygonObject {
     
     public void setName(String _name) {
         name = _name;
+    }
+    
+    public void edit() {
+        poly = null;
     }
     
     public boolean isSelected() {
@@ -126,15 +131,17 @@ public class PolygonObject {
         }
         
         if(isSelected) {
-            g2.fillPolygon(poly);
-            for(Point p : points) {
-                
-                g2.setColor(color);
-                g2.fillOval(p.x - 6, p.y -6 , 12, 12);
-                g2.setColor(new Color(255-color.getRed(), 255-color.getGreen(), 255-color.getBlue()));
-                g2.drawOval(p.x -6, p.y -6, 12, 12);
-                
-                
+            if(poly!=null) {
+                g2.fillPolygon(poly);
+                for(Point p : points) {
+
+                    g2.setColor(color);
+                    g2.fillOval(p.x - 6, p.y -6 , 12, 12);
+                    g2.setColor(new Color(255-color.getRed(), 255-color.getGreen(), 255-color.getBlue()));
+                    g2.drawOval(p.x -6, p.y -6, 12, 12);
+
+
+                }
             }
         }
         

@@ -17,10 +17,12 @@ public class MyTreeListener implements TreeSelectionListener {
     
     ObjectManager manager;
     JTree tree;
+    ImagePanel panel;
     
-    public MyTreeListener(ObjectManager mngr, JTree _tree) {
+    public MyTreeListener(ObjectManager mngr, JTree _tree, ImagePanel p) {
         manager = mngr;
         tree = _tree;
+        panel = p;
     }
     
     @Override
@@ -35,6 +37,11 @@ public class MyTreeListener implements TreeSelectionListener {
         Object nodeInfo = node.getUserObject();
         
         manager.select(manager.get(nodeInfo.hashCode()));
+        if(node.toString().equals("Root Node")) {
+            panel.mode = ImagePanel.Mode.Limbo2;
+            return;
+        }
+        panel.mode = ImagePanel.Mode.EditPoly;
     }
     
 }

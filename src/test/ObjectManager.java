@@ -7,6 +7,7 @@ package test;
 import java.util.ArrayList;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 /**
  *
@@ -17,6 +18,7 @@ public class ObjectManager {
     DefaultMutableTreeNode tree;
     JTree jt;
     int newID;
+    MyTreeModel model;
     
     public ObjectManager() {
         objects = new ArrayList<PolygonObject>();
@@ -31,24 +33,34 @@ public class ObjectManager {
         
         objects.add(po);
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(po);
+        po.node = node;
         //node.setUserObject(po);
         po.setID(newID);
         tree.add(node);
         
-        
+        jt.setSelectionPath(new TreePath(model.getPathToRoot(node)));
         update();
     }
     
     public void select(PolygonObject p) {
-        for(PolygonObject O : objects) {
-            O.deSelect();
-        }
+        deselect();
         
         for(PolygonObject O : objects) {
             if(O.equals(p)) {
                 p.select();
             }
         }
+    }
+    
+    public void deselect() {
+        for(PolygonObject O : objects) {
+            O.deSelect();
+        }
+        
+    }
+    
+    public void unhighlight() {
+        jt.setSelectionPath(new TreePath(model.getPathToRoot(tree.getRoot())));
     }
     
     public PolygonObject getSelected() {
