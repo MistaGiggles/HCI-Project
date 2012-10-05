@@ -22,9 +22,10 @@ public class ObjectManager {
 	MyTreeModel model;
     
     
-    public ObjectManager() {
+    public ObjectManager(LABELTEST _lb) {
         objects = new ArrayList<PolygonObject>();
         newID = 1;
+        lb = _lb;
     }
     
     public void setWorkingTree(DefaultMutableTreeNode t) {
@@ -39,7 +40,7 @@ public class ObjectManager {
         //node.setUserObject(po);
         po.setID(newID);
         tree.add(node);
-        
+        lb.setUnsavedChanges(true);
         jt.setSelectionPath(new TreePath(model.getPathToRoot(node)));
         update();
     }
