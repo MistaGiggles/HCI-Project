@@ -61,7 +61,7 @@ public class XMLReader {
             if(nl != null && nl.getLength() > 0) {
                     for(int i = 0 ; i < nl.getLength();i++) {
                             
-                        
+                            
                            //System.out.println(((Element)nl.item(i)).getTextContent());
                             
                             //get the employee element
@@ -78,6 +78,8 @@ public class XMLReader {
                             //myEmpls.add(e);
                     }
             }
+            
+            
                 
                 
                 
