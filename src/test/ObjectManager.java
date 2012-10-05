@@ -17,8 +17,10 @@ public class ObjectManager {
     DefaultMutableTreeNode tree;
     JTree jt;
     int newID;
+    LABELTEST lb;
     
-    public ObjectManager() {
+    public ObjectManager(LABELTEST _lb) {
+        lb = _lb;
         objects = new ArrayList<PolygonObject>();
         newID = 1;
     }
@@ -34,7 +36,7 @@ public class ObjectManager {
         //node.setUserObject(po);
         po.setID(newID);
         tree.add(node);
-        
+        lb.setUnsavedChanges(true);
         
         update();
     }

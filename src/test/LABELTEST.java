@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -27,6 +28,13 @@ import javax.swing.tree.TreeModel;
 public class LABELTEST extends javax.swing.JFrame {
     
     private String filepath = "image.jpg";
+    private boolean _unsavedChanges;  // set this variable true when the first change after a save is made
+    
+   public void setUnsavedChanges(boolean b) {
+        _unsavedChanges = b;
+        jButton2.setEnabled(b);
+        jMenuItem2.setEnabled(b);
+    }
     
     /**
      * Creates new form LABELTEST
@@ -41,7 +49,7 @@ public class LABELTEST extends javax.swing.JFrame {
         //rootNode.add(category);
         
         
-        imagePanel1.manager = new ObjectManager();
+        imagePanel1.manager = new ObjectManager(this);
         
         jTree1.setModel(treeModel);
         jTree1.setCellRenderer(new MyRenderer(imagePanel1.manager));
@@ -49,6 +57,7 @@ public class LABELTEST extends javax.swing.JFrame {
         
         imagePanel1.manager.setWorkingTree(rootNode);
         imagePanel1.manager.jt = jTree1;
+        setUnsavedChanges(false);
     }
 
     private void open() {
@@ -57,6 +66,7 @@ public class LABELTEST extends javax.swing.JFrame {
       if (rVal == JFileChooser.APPROVE_OPTION) {
         filepath = (c.getSelectedFile().getPath());
         imagePanel1.loadImage(filepath);
+        setUnsavedChanges(false);
         // TODO Also need to load and draw in new polygons
       }
       if (rVal == JFileChooser.CANCEL_OPTION) {
@@ -69,6 +79,7 @@ public class LABELTEST extends javax.swing.JFrame {
       if (rVal == JFileChooser.APPROVE_OPTION) {
         filepath = (c.getSelectedFile().getPath());
         // TODO Save polygon xml file to location c.getCurrentDirectory().toString()
+        setUnsavedChanges(false);
       }
       if (rVal == JFileChooser.CANCEL_OPTION) {
       }
@@ -80,7 +91,13 @@ public class LABELTEST extends javax.swing.JFrame {
 */
 
     private void quit() {
-        System.exit(0);  // Should have a 'Quit without saving?' dialogue box
+        int dialogResult = 0;
+        if (_unsavedChanges == true) {
+                dialogResult = JOptionPane.showConfirmDialog (null, "Quit without saving?","Warning",JOptionPane.YES_NO_OPTION);
+        }
+        if (dialogResult == JOptionPane.YES_OPTION || _unsavedChanges == false) {
+            System.exit(0);
+        }
     }
     
     
