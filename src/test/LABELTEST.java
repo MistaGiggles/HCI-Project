@@ -71,6 +71,8 @@ public class LABELTEST extends javax.swing.JFrame {
         filepath = (c.getSelectedFile().getPath());
         imagePanel1.loadImage(filepath);
         setUnsavedChanges(false);
+        XMLReader rd = new XMLReader("my.xml");
+        rd.openXML(new ObjectManager(this));
         // TODO Also need to load and draw in new polygons
       }
       if (rVal == JFileChooser.CANCEL_OPTION) {
@@ -83,6 +85,8 @@ public class LABELTEST extends javax.swing.JFrame {
       if (rVal == JFileChooser.APPROVE_OPTION) {
         filepath = (c.getSelectedFile().getPath());
         // TODO Save polygon xml file to location c.getCurrentDirectory().toString()
+        XMLBuilder b = new XMLBuilder(c.getCurrentDirectory().toString() + "/my.xml");
+        b.buildWrite(imagePanel1.manager);
         setUnsavedChanges(false);
       }
       if (rVal == JFileChooser.CANCEL_OPTION) {

@@ -20,7 +20,15 @@ public class ObjectManager {
     JTree jt;
     int newID;
     LABELTEST lb;
-	MyTreeModel model;
+    MyTreeModel model;
+    
+    public void transfer(ObjectManager to) {
+        to.tree = tree;
+        to.jt = jt;
+        to.lb = lb;
+        to.model = model;
+              
+    }
     
     
     public ObjectManager(LABELTEST _lb) {
