@@ -18,7 +18,9 @@ public class ObjectManager {
     DefaultMutableTreeNode tree;
     JTree jt;
     int newID;
-    MyTreeModel model;
+    LABELTEST lb;
+	MyTreeModel model;
+    
     
     public ObjectManager() {
         objects = new ArrayList<PolygonObject>();
