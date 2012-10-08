@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
- *
+ * 
  * @author s0935850
  */
 public class PolygonObject {
@@ -28,6 +28,9 @@ public class PolygonObject {
     private boolean isSelected;
     public DefaultMutableTreeNode node;
     
+    /**
+     * Constructor, instantiates arraylist and sets color to white and name to null
+     */
     public PolygonObject() {
         
         points = new ArrayList<Point>();
@@ -37,6 +40,8 @@ public class PolygonObject {
         isValid = false;
     }
     
+    
+    /* GETTERS AND SETTERS */
     public void setName(String _name) {
         name = _name;
     }
@@ -85,6 +90,15 @@ public class PolygonObject {
         return name;
     }
     
+    
+    /**
+     * 
+     * Draws the polygon with Graphics g. Handles the drawing of
+     * an uncomplete poly, a complete poly and a selected poly
+     * @param g Graphics object to draw with
+     * @param shade NOT USED
+     * @param scale NOT USED
+     */
     public void draw(Graphics g, boolean shade, double scale)
     {
         
@@ -150,6 +164,12 @@ public class PolygonObject {
         
     }
     
+    /**
+     * Designed to test if a point is touching a line of the polygon
+     * @param mx X coordinate
+     * @param my Y coordinate
+     * @return true if point is touching or almost touching
+     */
     public boolean isTouching(int mx, int my) {
         Point prev = null;
         for(Point p : points) {
@@ -167,6 +187,12 @@ public class PolygonObject {
         return false;
     }
     
+    
+    /**
+     * Adds a point to the polygon
+     * @param _x X coordinate
+     * @param _y Y coordinate
+     */
     public void addPoint(int _x, int _y) {
         points.add(new Point(_x, _y));
         if(points.size() > 1) {
@@ -175,7 +201,9 @@ public class PolygonObject {
     }
     
     
-    
+    /**
+     * Generates the Graphics Polygon Object for fast drawing and filling
+     */
     public void generatePoly()
     {
         poly = new Polygon();

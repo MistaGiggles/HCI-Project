@@ -23,12 +23,20 @@ public class XMLReader {
     String fname;
     private Document dom;
     
+    /**
+     * Creates a new XML reader
+     * @param file file to open
+     */
     public XMLReader(String file) {
         fname = file;
         
     }
     
-    
+    /**
+     * Opens the XML file and loads data into manager
+     * @param manager The object manager in which to store the new polygons
+     * @param scale The scale of the image, if image is too big it is scaled down, this value allows loader to scale polygons as they load
+     */
     public void openXML(ObjectManager manager, double scale) {
         
         manager.objects = new ArrayList<PolygonObject>();
