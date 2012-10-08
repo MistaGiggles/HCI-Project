@@ -2,7 +2,7 @@
 package test;
 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.util.Enumeration;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
@@ -76,8 +76,17 @@ public class ObjectManager {
     
     public void deleteObject(PolygonObject po) {
         //jt.remove(); //Remove node from jtree
+        DefaultMutableTreeNode theNode = null;
+        for (Enumeration e = tree.depthFirstEnumeration(); e.hasMoreElements() && theNode == null;) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.nextElement();
+            if (po.equals(node.getUserObject())) {
+                theNode = node;
+                tree.remove(node);
+            }
+        }
         
         objects.remove(po);
+        update();
         
     }
     

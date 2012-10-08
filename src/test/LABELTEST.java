@@ -33,7 +33,7 @@ public class LABELTEST extends javax.swing.JFrame {
     private String filepath = "image.jpg";
     private boolean _unsavedChanges;  // set this variable true when the first change after a save is made
 
-    private MyTreeModel treeModel;
+     MyTreeModel treeModel;
     private DefaultMutableTreeNode rootNode;
    
 
@@ -78,7 +78,7 @@ public class LABELTEST extends javax.swing.JFrame {
                         jTree1.updateUI();
                     }
                     if ("Delete".equals(event.getActionCommand())) {
-                        
+                        imagePanel1.manager.deleteObject(po);
                     }
                 }
             }

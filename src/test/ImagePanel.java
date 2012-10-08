@@ -285,6 +285,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                     highlight.draw(g,true, scale);
                 }
                 
+                
 		
 		
 	}
