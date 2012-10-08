@@ -12,6 +12,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 /**
  *
  * @author s0935850
+ * 
+ * Custom tree listener to react to different nodes being selected
+ * 
  */
 public class MyTreeListener implements TreeSelectionListener {
     
@@ -19,12 +22,22 @@ public class MyTreeListener implements TreeSelectionListener {
     JTree tree;
     ImagePanel panel;
     
+    /**
+     * Constructor, params are references to datqa structures and visual elements
+     * @param mngr Used to determine which Polygon has been selected
+     * @param _tree Used to fetch which node was clicked
+     * @param p  Used to change user mode
+     */
     public MyTreeListener(ObjectManager mngr, JTree _tree, ImagePanel p) {
         manager = mngr;
         tree = _tree;
         panel = p;
     }
     
+    /**
+     * Called when the selected value in the tree has been changed (ie user has clicked on it)
+     * @param tse 
+     */
     @Override
     public void valueChanged(TreeSelectionEvent tse) {
          DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();

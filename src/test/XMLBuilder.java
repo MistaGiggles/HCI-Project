@@ -25,6 +25,10 @@ public class XMLBuilder {
      Document doc;
      Element annotation;
     
+     /**
+      * XML Builder, creates an XML document from an object manager
+      * @param filename File to write to
+      */
     public XMLBuilder(String filename) {
         fname = filename;
         docbf = DocumentBuilderFactory.newInstance();
@@ -36,8 +40,13 @@ public class XMLBuilder {
         
     }
     
-    public void buildWrite(ObjectManager manager)  {
-        addObjects(annotation, manager);
+    /**
+     * Builds an XML and writes to disk
+     * @param manager Manager holder polygon data
+     * @param scale Scale the file was loaded at, used to unscale
+     */
+    public void buildWrite(ObjectManager manager, double scale)  {
+        addObjects(annotation, manager, scale);
         doc.appendChild(annotation);
         
         File file = new File(fname);
@@ -54,13 +63,19 @@ public class XMLBuilder {
         
     }
     
-    public void addPolygon(Element object, PolygonObject po) {
+    /**
+     * Adds a polygon to object element
+     * @param object Object element to work with
+     * @param po Polygon to add
+     * @param scale used to rescale polygon
+     */
+    public void addPolygon(Element object, PolygonObject po, double scale) {
         for(Point p : po.points) {
             Element point = doc.createElement("pt");
             Element x = doc.createElement("x");
-                x.setTextContent(Integer.toString(p.x));
+                x.setTextContent(Integer.toString((int)((double)p.x*scale)));
             Element y = doc.createElement("y");
-                y.setTextContent(Integer.toString(p.y));
+                y.setTextContent(Integer.toString((int)((double)p.y*scale)));
                 
             point.appendChild(x);
             point.appendChild(y);
@@ -70,7 +85,13 @@ public class XMLBuilder {
         
     }
     
-    public void addObjects(Element root, ObjectManager manager) {
+    /**
+     * Used to add group of objects to document
+     * @param root root node of document (annotation"
+     * @param manager Object Manager to work with
+     * @param scale For descaling polygons
+     */
+    public void addObjects(Element root, ObjectManager manager, double scale) {
         
         for(PolygonObject po : manager.objects) {
             Element obj = doc.createElement("object");
@@ -87,7 +108,7 @@ public class XMLBuilder {
             Element id = doc.createElement("id");
                 id.setTextContent(Integer.toString(po.getID()));
             Element poly = doc.createElement("polygon");
-            addPolygon(poly, po);
+            addPolygon(poly, po, scale);
             
             obj.appendChild(nm);
             obj.appendChild(dl);

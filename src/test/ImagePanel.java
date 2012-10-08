@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -36,6 +37,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     PolygonObject highlight;
     PolygonObject selected;
     Point grabbed;
+    double scale;
     
     int i = 0;
     
@@ -57,7 +59,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         };
 
         new Timer(50, taskPerformer).start();
-        
+        scale = 1;
         
         
         
@@ -202,6 +204,8 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                                 po.generatePoly();
                                 mode = Mode.View;
                                 po.setName("DEFAULT");
+                                String name =  JOptionPane.showInputDialog ( "Enter object name:" ); 
+                                po.setName(name);
                                 manager.addObject(po);
                                 manager.select(po);
                                 selected = manager.getSelected();
@@ -267,25 +271,25 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 
                 if(manager!=null) {
                     for(PolygonObject O : manager.objects) {
-                        O.draw(g, false);
+                        O.draw(g, false, scale);
                     }
                 }
                 
                 if(po!=null)
                 {
-                    po.draw(g, false);
+                    po.draw(g, false, scale);
                 }
                 
                 
                 if(highlight != null) {
-                    highlight.draw(g,true);
+                    highlight.draw(g,true, scale);
                 }
                 
 		
 		
 	}
     
-    public void loadImage(String file) {
+    public double loadImage(String file) {
         
     image = null;
     try {
@@ -294,15 +298,19 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         System.out.println("Error Opening File: " + e.getMessage());
         
     }
-    if(image==null) {return;}
+    if(image==null) {return 1;}
     if (image.getWidth() > 800 || image.getHeight() > 600) {
             int newWidth = image.getWidth() > 800 ? 800 : (image.getWidth() * 600)/image.getHeight();
             int newHeight = image.getHeight() > 600 ? 600 : (image.getHeight() * 800)/image.getWidth();
             System.out.println("SCALING TO " + newWidth + "x" + newHeight );
+            double scale = (double)newWidth/(double)image.getWidth();
             Image scaledImage = image.getScaledInstance(newWidth, newHeight, Image.SCALE_FAST);
             image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
             image.getGraphics().drawImage(scaledImage, 0, 0, this);
+            this.scale= scale;
+            return scale;
     }
-        
+        return 1;
     }
+    
 }

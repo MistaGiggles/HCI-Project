@@ -59,17 +59,18 @@ public class ObjectManager {
      */
     public void addObject(PolygonObject po) {
         
-        String name =  JOptionPane.showInputDialog ( "Enter object name:" ); 
-        po.setName(name);
         
+        System.out.println("ADDING: " + po.getName());
         objects.add(po);
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(po);
         po.node = node;
         //node.setUserObject(po);
         po.setID(newID);
-        tree.add(node);
-        lb.setUnsavedChanges(true);
-        jt.setSelectionPath(new TreePath(model.getPathToRoot(node)));
+     
+         tree.add(node);
+         lb.setUnsavedChanges(true);
+         jt.setSelectionPath(new TreePath(model.getPathToRoot(node)));
+        
         update();
     }
     
@@ -156,6 +157,7 @@ public class ObjectManager {
      * Updates the tree
      */
     public void update() {
+        
         jt.updateUI();
         jt.expandRow(0);
         
