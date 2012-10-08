@@ -35,7 +35,7 @@ public class LABELTEST extends javax.swing.JFrame {
 
      MyTreeModel treeModel;
     private DefaultMutableTreeNode rootNode;
-   
+
 
 
     public void setUnsavedChanges(boolean b) {
@@ -50,6 +50,11 @@ public class LABELTEST extends javax.swing.JFrame {
      */
     public LABELTEST() {
         initComponents();
+        
+        setRedo(false);
+        setUndo(false);
+        
+        imagePanel1.setLB(this);
         imagePanel1.loadImage(filepath);
         jToolBar1.setSize(100, 100);
         rootNode = new DefaultMutableTreeNode("Root Node");
@@ -116,6 +121,16 @@ public class LABELTEST extends javax.swing.JFrame {
 
     }
     
+    public void setUndo(boolean b) {
+        jButton5.setEnabled(b);
+        jMenuItem3.setEnabled(b);
+    }
+    
+    public void setRedo(boolean b) {
+        jButton6.setEnabled(b);
+        jMenuItem4.setEnabled(b);
+    }
+    
     public void removeNodes() {
         //for(int i =0 ;i < rootNode.getChildCount(); i++) {
         //    treeModel.removeNodeFromParent(rootNode.getChildAt(i));
@@ -163,10 +178,31 @@ public class LABELTEST extends javax.swing.JFrame {
     public void undoAdd() {
         if(imagePanel1.mode == ImagePanel.Mode.AddPoint) {
             if(imagePanel1.po != null) {
-                if(!imagePanel1.po.removeLastPoint()) {
+                if(imagePanel1.po.removeLastPoint() == 0) {
                     imagePanel1.po = null;
                     imagePanel1.mode = ImagePanel.Mode.AddPoly;
                     imagePanel1.updateUI();
+                    setUndo(false);
+                    setRedo(false);
+                    
+                } else {
+                    setRedo(true);
+                }
+            } 
+        }
+    }
+    
+    public void redoPoint() {
+        if(imagePanel1.mode == ImagePanel.Mode.AddPoint) {
+            if(imagePanel1.po != null) {
+                if(imagePanel1.po.redo() == 0) {
+                   
+                    imagePanel1.mode = ImagePanel.Mode.AddPoint;
+                    imagePanel1.updateUI();
+                    setUndo(true);
+                    setRedo(false);
+                } else {
+                    setRedo(true);
                 }
             }
         }
@@ -483,6 +519,7 @@ public class LABELTEST extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
+        redoPoint();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -506,6 +543,7 @@ public class LABELTEST extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        redoPoint();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -522,7 +560,7 @@ public class LABELTEST extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+        undoAdd();        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed

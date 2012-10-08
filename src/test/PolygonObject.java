@@ -19,6 +19,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class PolygonObject {
     
     public ArrayList<Point> points;
+    private ArrayList<Point> redos;
     private Polygon poly;
     public Color color;
     private String name;
@@ -34,18 +35,29 @@ public class PolygonObject {
     public PolygonObject() {
         
         points = new ArrayList<Point>();
+        redos = new ArrayList<Point>();
         color = new Color(255,255,255);
         name = "null";
         poly = null;
         isValid = false;
     }
     
-    public boolean  removeLastPoint() {
+    public int  removeLastPoint() {
         if(points.size() > 0) {
-        points.remove(points.size()-1);
-        return true;
+            
+        redos.add(points.remove(points.size()-1));
+        
         }
-        return false;
+        return points.size();
+    }
+    
+    public int redo() {
+        if(redos.size() > 0) {
+            points.add(redos.remove(redos.size()-1));
+            
+        }
+        return redos.size();
+        
     }
     
     

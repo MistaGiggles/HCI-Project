@@ -36,6 +36,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     ObjectManager manager;
     PolygonObject highlight;
     PolygonObject selected;
+    LABELTEST lb;
     Point grabbed;
     double scale;
     
@@ -44,6 +45,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     public ImagePanel()
     {
         super();
+        
         po = null;
         mode = Mode.AddPoly;
         addMouseListener(this);
@@ -63,6 +65,10 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         
         
         
+    }
+    
+    public void setLB(LABELTEST _lb) {
+        lb = _lb;
     }
     
     @Override
@@ -195,6 +201,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                         po.addPoint(e.getX(), e.getY());
                         mode = Mode.AddPoint;
                         System.out.println("MOUSEI:" + e.getX() + " - " + e.getY());
+                        lb.setUndo(true);
                     break;
 
 
