@@ -62,6 +62,19 @@ public class LABELTEST extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent event) {
                 System.out.println("Popup menu item ["
                         + event.getActionCommand() + "] was pressed.");
+                PolygonObject po = imagePanel1.manager.getSelected();
+                if (po != null) {
+                    if ("Rename".equals(event.getActionCommand())) {
+                        String name =  JOptionPane.showInputDialog ( "Enter object name:" ); 
+                        if (name != null) {
+                            po.setName(name);
+                        }
+                        jTree1.updateUI();
+                    }
+                    if ("Delete".equals(event.getActionCommand())) {
+                        
+                    }
+                }
             }
         };
         jTree1.addMouseListener(new MouseAdapter() {
@@ -69,6 +82,7 @@ public class LABELTEST extends javax.swing.JFrame {
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isRightMouseButton(e)) {
                     TreePath path = jTree1.getPathForLocation(e.getX(), e.getY());
+                    jTree1.setSelectionPath(path);
                     Rectangle pathBounds = jTree1.getUI().getPathBounds(jTree1, path);
                     if (pathBounds != null && pathBounds.contains(e.getX(), e.getY())) {
                         JPopupMenu contextMenu = new JPopupMenu();

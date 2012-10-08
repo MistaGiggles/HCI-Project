@@ -73,6 +73,13 @@ public class ObjectManager {
         update();
     }
     
+    public void deleteObject(PolygonObject po) {
+        //jt.remove(); //Remove node from jtree
+        
+        objects.remove(po);
+        
+    }
+    
     /*
      * Selects a polygon to be highlighted on the tree and to be made editable
      * @param p Polygon to select
