@@ -5,6 +5,8 @@
 package test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,10 +29,9 @@ public class XMLReader {
     }
     
     
-    public void openXML(ObjectManager toReplace) {
-        ObjectManager MAN = new ObjectManager(toReplace.lb);
-        toReplace.transfer(MAN);
-        toReplace = MAN;
+    public void openXML(ObjectManager manager, double scale) {
+        
+        manager.objects = new ArrayList<PolygonObject>();
         
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -58,6 +59,7 @@ public class XMLReader {
 
             //get a nodelist of  elements
             NodeList nl = docEle.getElementsByTagName("object");
+            PolygonObject po;
             if(nl != null && nl.getLength() > 0) {
                     for(int i = 0 ; i < nl.getLength();i++) {
                             
@@ -65,11 +67,37 @@ public class XMLReader {
                            //System.out.println(((Element)nl.item(i)).getTextContent());
                             
                             //get the employee element
-                            Element el = (Element)nl.item(i);
+                            Element object = (Element)nl.item(i);
                             
-                            String name = getTextValue(el,"name");
+                            String name = getTextValue(object,"name");
+                            po = new PolygonObject();
+                            po.setName(name);
                             
-                            System.out.println(name);
+                            NodeList polys = object.getElementsByTagName("polygon");
+                            Element poly = (Element) polys.item(0);
+                            NodeList points = poly.getElementsByTagName("pt");
+                            if(points != null) {
+                                for(int p = 0; p < points.getLength(); p++) {
+                                    //System.out.println(points.item(p).getNodeName());
+                                    Element point = (Element)points.item(p);
+                                    
+                                   
+                                    
+                                    int x = Integer.parseInt(getTextValue(point, "x"));
+                                    int y = Integer.parseInt(getTextValue(point, "y"));
+                                    System.out.println("POINT: " + x*scale + ", " + y*scale);
+                                    po.addPoint((int)(x*scale), (int)(y*scale));
+                                    //po.addPoint(x,y);
+                                    
+                                    
+                                    
+                                    
+                                }
+                            }
+                            Random gen = new Random();
+                            po.setColor(gen.nextInt(256), gen.nextInt(256), gen.nextInt(256));
+                            po.generatePoly();
+                            manager.addObject(po);
 
                             //get the Employee object
                             //Employee e = getEmployee(el);

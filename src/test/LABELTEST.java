@@ -6,15 +6,11 @@ import java.awt.Component;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
 
 /*
  * To change this template, choose Tools | Templates
@@ -29,7 +25,8 @@ public class LABELTEST extends javax.swing.JFrame {
     
     private String filepath = "image.jpg";
     private boolean _unsavedChanges;  // set this variable true when the first change after a save is made
-    
+    private MyTreeModel treeModel;
+    private DefaultMutableTreeNode rootNode;
    public void setUnsavedChanges(boolean b) {
         _unsavedChanges = b;
         jButton2.setEnabled(b);
@@ -43,8 +40,8 @@ public class LABELTEST extends javax.swing.JFrame {
         initComponents();
         imagePanel1.loadImage(filepath);
         jToolBar1.setSize(100, 100);
-        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Root Node");
-        MyTreeModel treeModel = new MyTreeModel(rootNode);
+        rootNode = new DefaultMutableTreeNode("Root Node");
+        treeModel = new MyTreeModel(rootNode);
         //DefaultMutableTreeNode category = new DefaultMutableTreeNode("Books for Java Programmers");
         //rootNode.add(category);
         
@@ -59,9 +56,22 @@ public class LABELTEST extends javax.swing.JFrame {
         imagePanel1.manager.jt = jTree1;
 
         imagePanel1.manager.model = treeModel;
+        
 
         setUnsavedChanges(false);
  
+    }
+    
+    public void removeNodes() {
+        //for(int i =0 ;i < rootNode.getChildCount(); i++) {
+        //    treeModel.removeNodeFromParent(rootNode.getChildAt(i));
+        //}
+        rootNode = new DefaultMutableTreeNode("Root Node");
+        treeModel = new MyTreeModel(rootNode);
+        imagePanel1.manager.setWorkingTree(rootNode);
+        jTree1.setModel(treeModel);
+        imagePanel1.manager.model = treeModel;
+        
     }
 
     private void open() {
@@ -69,10 +79,11 @@ public class LABELTEST extends javax.swing.JFrame {
       int rVal = c.showOpenDialog(LABELTEST.this);
       if (rVal == JFileChooser.APPROVE_OPTION) {
         filepath = (c.getSelectedFile().getPath());
-        imagePanel1.loadImage(filepath);
+        double scale = imagePanel1.loadImage(filepath);
         setUnsavedChanges(false);
-        XMLReader rd = new XMLReader("my.xml");
-        rd.openXML(new ObjectManager(this));
+        XMLReader rd = new XMLReader(filepath + ".xml");
+        removeNodes();
+        rd.openXML(imagePanel1.manager, scale);
         // TODO Also need to load and draw in new polygons
       }
       if (rVal == JFileChooser.CANCEL_OPTION) {
@@ -80,17 +91,17 @@ public class LABELTEST extends javax.swing.JFrame {
     }
 
     private void save() {
-      JFileChooser c = new JFileChooser();
-      int rVal = c.showSaveDialog(LABELTEST.this);
-      if (rVal == JFileChooser.APPROVE_OPTION) {
-        filepath = (c.getSelectedFile().getPath());
+      //JFileChooser c = new JFileChooser();
+      //int rVal = c.showSaveDialog(LABELTEST.this);
+      //if (rVal == JFileChooser.APPROVE_OPTION) {
+        //filepath = (c.getSelectedFile().getPath());
         // TODO Save polygon xml file to location c.getCurrentDirectory().toString()
-        XMLBuilder b = new XMLBuilder(c.getCurrentDirectory().toString() + "/my.xml");
-        b.buildWrite(imagePanel1.manager);
+        XMLBuilder b = new XMLBuilder(filepath + ".xml");
+        b.buildWrite(imagePanel1.manager, (double)1/imagePanel1.scale);
         setUnsavedChanges(false);
-      }
-      if (rVal == JFileChooser.CANCEL_OPTION) {
-      }
+      //}
+      //if (rVal == JFileChooser.CANCEL_OPTION) {
+      //}
     }
     
 /*      HOW TO GREYSCALE BUTTONS

@@ -85,10 +85,12 @@ public class PolygonObject {
         return name;
     }
     
-    public void draw(Graphics g, boolean shade)
+    public void draw(Graphics g, boolean shade, double scale)
     {
+        
         g.setColor(color);
         Graphics2D g2 = (Graphics2D) g;
+        //g2.scale(scale, scale);
         g2.setStroke(new BasicStroke(7.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,10.0f));
 
         if(points.size() == 1) {
@@ -134,11 +136,12 @@ public class PolygonObject {
             if(poly!=null) {
                 g2.fillPolygon(poly);
                 for(Point p : points) {
-
+                    //g2.scale(scale, scale);
                     g2.setColor(color);
                     g2.fillOval(p.x - 6, p.y -6 , 12, 12);
                     g2.setColor(new Color(255-color.getRed(), 255-color.getGreen(), 255-color.getBlue()));
                     g2.drawOval(p.x -6, p.y -6, 12, 12);
+                    //g2.scale(1, 1);
 
 
                 }

@@ -36,8 +36,8 @@ public class XMLBuilder {
         
     }
     
-    public void buildWrite(ObjectManager manager)  {
-        addObjects(annotation, manager);
+    public void buildWrite(ObjectManager manager, double scale)  {
+        addObjects(annotation, manager, scale);
         doc.appendChild(annotation);
         
         File file = new File(fname);
@@ -54,13 +54,13 @@ public class XMLBuilder {
         
     }
     
-    public void addPolygon(Element object, PolygonObject po) {
+    public void addPolygon(Element object, PolygonObject po, double scale) {
         for(Point p : po.points) {
             Element point = doc.createElement("pt");
             Element x = doc.createElement("x");
-                x.setTextContent(Integer.toString(p.x));
+                x.setTextContent(Integer.toString((int)((double)p.x*scale)));
             Element y = doc.createElement("y");
-                y.setTextContent(Integer.toString(p.y));
+                y.setTextContent(Integer.toString((int)((double)p.y*scale)));
                 
             point.appendChild(x);
             point.appendChild(y);
@@ -70,7 +70,7 @@ public class XMLBuilder {
         
     }
     
-    public void addObjects(Element root, ObjectManager manager) {
+    public void addObjects(Element root, ObjectManager manager, double scale) {
         
         for(PolygonObject po : manager.objects) {
             Element obj = doc.createElement("object");
@@ -87,7 +87,7 @@ public class XMLBuilder {
             Element id = doc.createElement("id");
                 id.setTextContent(Integer.toString(po.getID()));
             Element poly = doc.createElement("polygon");
-            addPolygon(poly, po);
+            addPolygon(poly, po, scale);
             
             obj.appendChild(nm);
             obj.appendChild(dl);
