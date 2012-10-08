@@ -160,6 +160,18 @@ public class LABELTEST extends javax.swing.JFrame {
 
     }
     
+    public void undoAdd() {
+        if(imagePanel1.mode == ImagePanel.Mode.AddPoint) {
+            if(imagePanel1.po != null) {
+                if(!imagePanel1.po.removeLastPoint()) {
+                    imagePanel1.po = null;
+                    imagePanel1.mode = ImagePanel.Mode.AddPoly;
+                    imagePanel1.updateUI();
+                }
+            }
+        }
+    }
+    
     private void quit() {
         int dialogResult = 0;
         if (_unsavedChanges == true) {
@@ -498,6 +510,7 @@ public class LABELTEST extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        undoAdd();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

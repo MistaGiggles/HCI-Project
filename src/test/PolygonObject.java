@@ -40,6 +40,14 @@ public class PolygonObject {
         isValid = false;
     }
     
+    public boolean  removeLastPoint() {
+        if(points.size() > 0) {
+        points.remove(points.size()-1);
+        return true;
+        }
+        return false;
+    }
+    
     
     /* GETTERS AND SETTERS */
     public void setName(String _name) {
@@ -117,7 +125,7 @@ public class PolygonObject {
             Point prev = null;
             boolean first = true;
             
-            
+            if(points.size() > 0)
             g2.drawOval(points.get(0).x, points.get(0).y, 7, 7);
             
             for(Point p : points)
@@ -129,7 +137,7 @@ public class PolygonObject {
                 prev = p;
             }
             
-            if(temp != null) {
+            if(temp != null && prev != null) {
                 g2.drawLine(prev.x, prev.y, temp.x, temp.y);
                 
             }
