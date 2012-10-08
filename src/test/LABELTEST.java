@@ -1,45 +1,48 @@
 package test;
 
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author s0935850
  */
 public class LABELTEST extends javax.swing.JFrame {
-    
+
     private String filepath = "image.jpg";
     private boolean _unsavedChanges;  // set this variable true when the first change after a save is made
-    
-   public void setUnsavedChanges(boolean b) {
+
+    public void setUnsavedChanges(boolean b) {
         _unsavedChanges = b;
         jButton2.setEnabled(b);
         jMenuItem2.setEnabled(b);
     }
-    
+
     /**
      * Creates new form LABELTEST
      */
-    public LABELTEST()  {
+    public LABELTEST() {
         initComponents();
         imagePanel1.loadImage(filepath);
         jToolBar1.setSize(100, 100);
@@ -47,130 +50,148 @@ public class LABELTEST extends javax.swing.JFrame {
         MyTreeModel treeModel = new MyTreeModel(rootNode);
         //DefaultMutableTreeNode category = new DefaultMutableTreeNode("Books for Java Programmers");
         //rootNode.add(category);
-        
-        
+
+
         imagePanel1.manager = new ObjectManager(this);
-        
+
         jTree1.setModel(treeModel);
         jTree1.setCellRenderer(new MyRenderer(imagePanel1.manager));
         jTree1.addTreeSelectionListener(new MyTreeListener(imagePanel1.manager, jTree1, imagePanel1));
+
+        final ActionListener menuListener = new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                System.out.println("Popup menu item ["
+                        + event.getActionCommand() + "] was pressed.");
+            }
+        };
+        jTree1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    TreePath path = jTree1.getPathForLocation(e.getX(), e.getY());
+                    Rectangle pathBounds = jTree1.getUI().getPathBounds(jTree1, path);
+                    if (pathBounds != null && pathBounds.contains(e.getX(), e.getY())) {
+                        JPopupMenu contextMenu = new JPopupMenu();
+                        JMenuItem rename = new JMenuItem("Rename");
+                        rename.addActionListener(menuListener);
+                        contextMenu.add(rename);
+                        JMenuItem delete = new JMenuItem("Delete");
+                        delete.addActionListener(menuListener);
+                        contextMenu.add(delete);
+                        contextMenu.show(jTree1, pathBounds.x, pathBounds.y + pathBounds.height);
+                    }
+                }
+            }
+        });
+
         
+
         imagePanel1.manager.setWorkingTree(rootNode);
         imagePanel1.manager.jt = jTree1;
 
         imagePanel1.manager.model = treeModel;
 
         setUnsavedChanges(false);
- 
+
     }
 
     private void open() {
-      JFileChooser c = new JFileChooser();
-      int rVal = c.showOpenDialog(LABELTEST.this);
-      if (rVal == JFileChooser.APPROVE_OPTION) {
-        filepath = (c.getSelectedFile().getPath());
-        imagePanel1.loadImage(filepath);
-        setUnsavedChanges(false);
-        XMLReader rd = new XMLReader("my.xml");
-        rd.openXML(new ObjectManager(this));
-        // TODO Also need to load and draw in new polygons
-      }
-      if (rVal == JFileChooser.CANCEL_OPTION) {
-      }
+        JFileChooser c = new JFileChooser();
+        int rVal = c.showOpenDialog(LABELTEST.this);
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            filepath = (c.getSelectedFile().getPath());
+            imagePanel1.loadImage(filepath);
+            setUnsavedChanges(false);
+            XMLReader rd = new XMLReader("my.xml");
+            rd.openXML(new ObjectManager(this));
+            // TODO Also need to load and draw in new polygons
+        }
+        if (rVal == JFileChooser.CANCEL_OPTION) {
+        }
     }
 
     private void save() {
-      JFileChooser c = new JFileChooser();
-      int rVal = c.showSaveDialog(LABELTEST.this);
-      if (rVal == JFileChooser.APPROVE_OPTION) {
-        filepath = (c.getSelectedFile().getPath());
-        // TODO Save polygon xml file to location c.getCurrentDirectory().toString()
-        XMLBuilder b = new XMLBuilder(c.getCurrentDirectory().toString() + "/my.xml");
-        b.buildWrite(imagePanel1.manager);
-        setUnsavedChanges(false);
-      }
-      if (rVal == JFileChooser.CANCEL_OPTION) {
-      }
+        JFileChooser c = new JFileChooser();
+        int rVal = c.showSaveDialog(LABELTEST.this);
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            filepath = (c.getSelectedFile().getPath());
+            // TODO Save polygon xml file to location c.getCurrentDirectory().toString()
+            XMLBuilder b = new XMLBuilder(c.getCurrentDirectory().toString() + "/my.xml");
+            b.buildWrite(imagePanel1.manager);
+            setUnsavedChanges(false);
+        }
+        if (rVal == JFileChooser.CANCEL_OPTION) {
+        }
     }
     
-/*      HOW TO GREYSCALE BUTTONS
-        jButton1.setEnabled(false);
-        jMenuItem1.setEnabled(false);
-*/
-
     private void quit() {
         int dialogResult = 0;
         if (_unsavedChanges == true) {
-                dialogResult = JOptionPane.showConfirmDialog (null, "Quit without saving?","Warning",JOptionPane.YES_NO_OPTION);
+            dialogResult = JOptionPane.showConfirmDialog(null, "Quit without saving?", "Warning", JOptionPane.YES_NO_OPTION);
         }
         if (dialogResult == JOptionPane.YES_OPTION || _unsavedChanges == false) {
             System.exit(0);
         }
     }
-    
-    
+
     private class MyRenderer extends DefaultTreeCellRenderer {
-        
+
         ObjectManager manager;
+
         public MyRenderer(ObjectManager mng) {
             manager = mng;
-        } // Should have a 'Quit without saving?' dialogue box
+        }
+
         @Override
         public Component getTreeCellRendererComponent(
-                            JTree tree,
-                            Object value,
-                            boolean sel,
-                            boolean expanded,
-                            boolean leaf,
-                            int row,
-                            boolean hasFocus) {
- 
+                JTree tree,
+                Object value,
+                boolean sel,
+                boolean expanded,
+                boolean leaf,
+                int row,
+                boolean hasFocus) {
+
             super.getTreeCellRendererComponent(
-                            tree, value, sel,
-                            expanded, leaf, row,
-                            hasFocus);
-            
-            
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode)value;
+                    tree, value, sel,
+                    expanded, leaf, row,
+                    hasFocus);
+
+
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
             //Object po =  (Object)(node.getUserObject());
-            Object nodeObj = ((DefaultMutableTreeNode)value).getUserObject();
+            Object nodeObj = ((DefaultMutableTreeNode) value).getUserObject();
             PolygonObject po = manager.get(nodeObj.hashCode());
-            
-            
+
+
             //((PolygonObject)nodeObj).getColor();
             //PolygonObject a = (PolygonObject) po;
-            
+
             //PolygonObject po = (PolygonObject) value;
-            if(po != null) {
-                setIcon(new ImageIcon(generateIcon(po.color.getRed(),po.color.getGreen(),po.color.getBlue())));
+            if (po != null) {
+                setIcon(new ImageIcon(generateIcon(po.color.getRed(), po.color.getGreen(), po.color.getBlue())));
             }
             return this;
         }
-        
-        
-        Image generateIcon(int r, int g, int b)
-        {
-            BufferedImage image = new BufferedImage(16,16,BufferedImage.TYPE_INT_RGB);
-            for(int y = 0; y < image.getHeight(); y++) {
-                for(int x = 0; x < image.getWidth(); x++) {
-                    Color imageColor = new Color(r,g,b);
-                    Color white = new Color(255,255,255);
+
+        Image generateIcon(int r, int g, int b) {
+            BufferedImage image = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
+            for (int y = 0; y < image.getHeight(); y++) {
+                for (int x = 0; x < image.getWidth(); x++) {
+                    Color imageColor = new Color(r, g, b);
+                    Color white = new Color(255, 255, 255);
                     //mix imageColor and desired color 
-                    if(Math.pow(x-8,2) + Math.pow(y-8,2) < 64)
+                    if (Math.pow(x - 8, 2) + Math.pow(y - 8, 2) < 64) {
                         image.setRGB(x, y, imageColor.getRGB());
-                    else
-                        image.setRGB(x,y, white.getRGB());
+                    } else {
+                        image.setRGB(x, y, white.getRGB());
+                    }
                 }
             }
             return image;
-            
+
         }
-        
-        
- 
-        
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -498,8 +519,8 @@ public class LABELTEST extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LABELTEST().setVisible(true);
-                
-                
+
+
             }
         });
     }
