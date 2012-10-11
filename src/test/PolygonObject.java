@@ -20,7 +20,7 @@ public class PolygonObject {
     
     public ArrayList<Point> points;
     private ArrayList<Point> redos;
-    private Polygon poly;
+    public Polygon poly;
     public Color color;
     private String name;
     public Point temp;
@@ -130,15 +130,17 @@ public class PolygonObject {
         if(points.size() == 1) {
             if(temp != null)
                 g2.drawLine(points.get(0) .x,points.get(0).y, temp.x, temp.y);
+                g2.setColor(color);
+                g2.fillOval(points.get(0).x - 6,  points.get(0).y -6 , 12, 12);
+                g2.setColor(new Color(255-color.getRed(), 255-color.getGreen(), 255-color.getBlue()));
+                g2.drawOval(points.get(0).x -6,  points.get(0).y -6, 12, 12);
+                g2.setColor(color);
             return;
         }
         if(poly == null) {
             
             Point prev = null;
             boolean first = true;
-            
-            if(points.size() > 0)
-            g2.drawOval(points.get(0).x, points.get(0).y, 7, 7);
             
             for(Point p : points)
             {
@@ -153,6 +155,16 @@ public class PolygonObject {
                 g2.drawLine(prev.x, prev.y, temp.x, temp.y);
                 
             }
+            
+            if(points.size() > 0) {
+            
+                g2.setColor(color);
+                g2.fillOval(points.get(0).x - 6,  points.get(0).y -6 , 12, 12);
+                g2.setColor(new Color(255-color.getRed(), 255-color.getGreen(), 255-color.getBlue()));
+                g2.drawOval(points.get(0).x -6,  points.get(0).y -6, 12, 12);
+                g2.setColor(color);
+            }
+            
             
         } else {
             g.setColor(color);

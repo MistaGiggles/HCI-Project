@@ -50,7 +50,7 @@ public class MyTreeListener implements TreeSelectionListener {
         Object nodeInfo = node.getUserObject();
         
         manager.select(manager.get(nodeInfo.hashCode()));
-        if(node.toString().equals("Root Node")) {
+        if(node.toString().equals("Objects")) {
             panel.mode = ImagePanel.Mode.Limbo2;
             return;
         }
