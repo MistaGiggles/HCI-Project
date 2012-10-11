@@ -22,7 +22,7 @@ import javax.swing.Timer;
 
 /**
  *
- * @author s0935850
+ * @author Matthew Shepherd <s0935850> and Robert Evans <s0949775>
  */
 public class ImagePanel extends JPanel implements MouseListener, MouseMotionListener {
     
@@ -215,9 +215,8 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                                 mode = Mode.View;
                                 po.setName("DEFAULT");
                                 String name = null;
-                                while(name==null) {
-                                    name =  JOptionPane.showInputDialog ( "Enter object name:" );
-                                } 
+                                name =  JOptionPane.showInputDialog ( "Enter object name:" );
+                                if(name==null) name = "";
                                 
                                 po.setName(name);
                                 manager.addObject(po);
@@ -303,11 +302,11 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 if(highlight != null) {
                     highlight.draw(g,true, scale);
                 }
+<<<<<<<
                 if(manager != null) {
                     if(manager.getSelected()!=null) {
                         manager.getSelected().draw( g, false, scale);
                     }
-                }
                 
 		
 		

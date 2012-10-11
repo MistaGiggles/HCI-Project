@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author s0935850
+ * @author Matthew Shepherd <s0935850> and Robert Evans <s0949775>
  */
 public class XMLReader {
     String fname;

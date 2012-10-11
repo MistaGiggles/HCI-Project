@@ -2,6 +2,7 @@ package test;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -27,7 +28,7 @@ import javax.swing.tree.TreePath;
  */
 /**
  *
- * @author s0935850
+ * @author Matthew Shepherd <s0935850> and Robert Evans <s0949775>
  */
 public class LABELTEST extends javax.swing.JFrame {
 
@@ -226,6 +227,14 @@ public class LABELTEST extends javax.swing.JFrame {
         }
     }
 
+    private void editMode() {
+        imagePanel1.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+    }
+
+    private void drawMode() {
+        imagePanel1.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+    }
+
     private class MyRenderer extends DefaultTreeCellRenderer {
 
         ObjectManager manager;
@@ -326,6 +335,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/open_small.png"))); // NOI18N
+        jButton1.setToolTipText("Open");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -337,6 +347,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/save_small.png"))); // NOI18N
+        jButton2.setToolTipText("Save");
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -348,6 +359,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jToolBar1.add(jButton2);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/zoomin_small.png"))); // NOI18N
+        jButton3.setToolTipText("Zoom in");
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -359,6 +371,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jToolBar1.add(jButton3);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/zoomout_small.png"))); // NOI18N
+        jButton4.setToolTipText("Zoom out");
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -370,6 +383,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jToolBar1.add(jButton4);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/undo_small.png"))); // NOI18N
+        jButton5.setToolTipText("Undo");
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -381,6 +395,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jToolBar1.add(jButton5);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/redo_small.png"))); // NOI18N
+        jButton6.setToolTipText("Redo");
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -392,6 +407,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jToolBar1.add(jButton6);
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/quit_small.png"))); // NOI18N
+        jButton7.setToolTipText("Quit");
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -569,7 +585,7 @@ public class LABELTEST extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // Action for open icon on toolbar
+        // Action for save icon on toolbar
         save();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -579,21 +595,21 @@ public class LABELTEST extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        // Redo (toolbar)
         redoPoint();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        // Undo (toolbar)
         undoAdd();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        // Zoom out (toolbar)
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // Zoom in (toolbar)
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -609,15 +625,18 @@ public class LABELTEST extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // Quit (toolbar)
         quit();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // Edit mode
+        editMode();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // Draw mode
+        drawMode();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     /**

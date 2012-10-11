@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author s0935850
+ * @author Matthew Shepherd <s0935850> and Robert Evans <s0949775>
  */
 public class Form1 extends javax.swing.JPanel {
     BufferedImage image;
