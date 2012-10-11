@@ -125,6 +125,9 @@ public class ObjectManager {
      * Returns reference to the selected polygon
      */
     public PolygonObject getSelected() {
+        if(objects==null) {
+            return null;
+        }
         for(PolygonObject O :objects) {
             if(O.isSelected()) {
                 return O;
