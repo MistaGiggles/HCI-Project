@@ -2,6 +2,7 @@ package test;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -223,6 +224,14 @@ public class LABELTEST extends javax.swing.JFrame {
         if (dialogResult == JOptionPane.YES_OPTION || _unsavedChanges == false) {
             System.exit(0);
         }
+    }
+
+    private void editMode() {
+        imagePanel1.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+    }
+
+    private void drawMode() {
+        imagePanel1.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
     }
 
     private class MyRenderer extends DefaultTreeCellRenderer {
@@ -613,10 +622,12 @@ public class LABELTEST extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // Edit mode
+        editMode();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // Draw mode
+        drawMode();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     /**

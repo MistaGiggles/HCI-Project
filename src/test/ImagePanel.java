@@ -215,9 +215,8 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                                 mode = Mode.View;
                                 po.setName("DEFAULT");
                                 String name = null;
-                                while(name==null) {
-                                    name =  JOptionPane.showInputDialog ( "Enter object name:" );
-                                } 
+                                name =  JOptionPane.showInputDialog ( "Enter object name:" );
+                                if(name==null) name = "unlabelled";
                                 
                                 po.setName(name);
                                 manager.addObject(po);
