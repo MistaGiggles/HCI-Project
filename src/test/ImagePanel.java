@@ -28,10 +28,12 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     
     
     public enum Mode {AddPoint, AddPoly, EditPoly, View, Limbo, Limbo2};
+    public enum GlobalMode {DrawMode, EditMode};
     
     BufferedImage image;
     PolygonObject po;
     Mode mode;
+    GlobalMode global;
     Point first;
     ObjectManager manager;
     PolygonObject highlight;
@@ -39,13 +41,14 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     LABELTEST lb;
     Point grabbed;
     double scale;
+    boolean justMade;
     
     int i = 0;
     
     public ImagePanel()
     {
         super();
-        
+        justMade=false;
         po = null;
         mode = Mode.AddPoly;
         addMouseListener(this);
@@ -106,7 +109,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                    break;
 
             }
-        
+    
          //this.repaint();
     }
     
@@ -211,13 +214,18 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                                 po.generatePoly();
                                 mode = Mode.View;
                                 po.setName("DEFAULT");
-                                String name =  JOptionPane.showInputDialog ( "Enter object name:" ); 
+                                String name = null;
+                                while(name==null) {
+                                    name =  JOptionPane.showInputDialog ( "Enter object name:" );
+                                } 
+                                
                                 po.setName(name);
                                 manager.addObject(po);
                                 manager.select(po);
                                 selected = manager.getSelected();
                                 po = null;
                                 mode = Mode.EditPoly;
+                                justMade = true;
 
                             } else {
                                 po.addPoint(e.getX(), e.getY());
@@ -229,11 +237,15 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                     break;
 
                 case EditPoly:
-                        if(selected != null) {
+                        
+                            if(justMade) {
+                                mode = Mode.AddPoly;
+                                justMade = false;
+                                selected = null;
+                            }
 
 
-
-                        }
+                        
 
 
                     break;
@@ -278,6 +290,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 
                 if(manager!=null) {
                     for(PolygonObject O : manager.objects) {
+                        if(!O.isSelected()) 
                         O.draw(g, false, scale);
                     }
                 }
@@ -290,6 +303,10 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 
                 if(highlight != null) {
                     highlight.draw(g,true, scale);
+                }
+                
+                if(manager.getSelected()!=null) {
+                    manager.getSelected().draw( g, false, scale);
                 }
                 
                 

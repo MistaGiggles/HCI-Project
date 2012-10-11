@@ -57,7 +57,7 @@ public class LABELTEST extends javax.swing.JFrame {
         imagePanel1.setLB(this);
         imagePanel1.loadImage(filepath);
         jToolBar1.setSize(100, 100);
-        rootNode = new DefaultMutableTreeNode("Root Node");
+        rootNode = new DefaultMutableTreeNode("Objects");
         treeModel = new MyTreeModel(rootNode);
         //DefaultMutableTreeNode category = new DefaultMutableTreeNode("Books for Java Programmers");
         //rootNode.add(category);
@@ -76,7 +76,11 @@ public class LABELTEST extends javax.swing.JFrame {
                 PolygonObject po = imagePanel1.manager.getSelected();
                 if (po != null) {
                     if ("Rename".equals(event.getActionCommand())) {
-                        String name =  JOptionPane.showInputDialog ( "Enter object name:" ); 
+                        String name = null;
+                        while(name==null) {
+                            name =  JOptionPane.showInputDialog ( "Enter object name:" ); 
+                        }
+                        
                         if (name != null) {
                             po.setName(name);
                         }
@@ -84,6 +88,9 @@ public class LABELTEST extends javax.swing.JFrame {
                     }
                     if ("Delete".equals(event.getActionCommand())) {
                         imagePanel1.manager.deleteObject(po);
+                        if(imagePanel1.manager.objects.size() == 0) {
+                            imagePanel1.mode = ImagePanel.Mode.AddPoly;
+                        }
                     }
                 }
             }
