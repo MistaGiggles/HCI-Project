@@ -23,7 +23,7 @@ public class MyTreeListener implements TreeSelectionListener {
     ImagePanel panel;
     
     /**
-     * Constructor, params are references to datqa structures and visual elements
+     * Constructor, params are references to data structures and visual elements
      * @param mngr Used to determine which Polygon has been selected
      * @param _tree Used to fetch which node was clicked
      * @param p  Used to change user mode
