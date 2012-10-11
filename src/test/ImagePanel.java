@@ -41,14 +41,13 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     LABELTEST lb;
     Point grabbed;
     double scale;
-    boolean justMade;
+    
     
     int i = 0;
     
     public ImagePanel()
     {
         super();
-        justMade=false;
         po = null;
         mode = Mode.AddPoly;
         addMouseListener(this);
@@ -68,6 +67,14 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         
         
         
+    }
+    
+    public void setEdit() {
+        global = GlobalMode.EditMode;
+    }
+    
+    public void setDraw() {
+        global = GlobalMode.DrawMode;
     }
     
     public void setLB(LABELTEST _lb) {
@@ -96,20 +103,24 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void mouseDragged(MouseEvent e)
     {  
-        
-            switch(mode) {
-               case EditPoly:
+        switch(global) {
+            case EditMode:
+                switch(mode) {
+                   case EditPoly:
 
-                   if(grabbed != null) {
-                       grabbed.x = e.getX();
-                       grabbed.y = e.getY();
-                       selected.generatePoly();
-                   }
+                       if(grabbed != null) {
+                           grabbed.x = e.getX();
+                           grabbed.y = e.getY();
+                           selected.generatePoly();
+                       }
 
-                   break;
+                       break;
 
-            }
-    
+                }
+                break;
+                
+                
+        }
          //this.repaint();
     }
     
@@ -129,22 +140,26 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void mouseReleased(MouseEvent e)
     {   
-        if(e.getButton() == MouseEvent.BUTTON1) {
-            switch(mode) {
-                case EditPoly:
-                        if(grabbed != null) {
-                            grabbed.x = e.getX();
-                            grabbed.y = e.getY();
-                            if(selected != null) 
-                            {
-                                selected.generatePoly();
-                            }
-                            grabbed = null;
+        switch(global) {
+            case EditMode:
+                if(e.getButton() == MouseEvent.BUTTON1) {
+                    switch(mode) {
+                        case EditPoly:
+                                if(grabbed != null) {
+                                    grabbed.x = e.getX();
+                                    grabbed.y = e.getY();
+                                    if(selected != null) 
+                                    {
+                                        selected.generatePoly();
+                                    }
+                                    grabbed = null;
 
-                        }
-                    break;
+                                }
+                            break;
 
-            }
+                    }
+                }
+                break;
         }
         //this.repaint();
     }
@@ -152,39 +167,43 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     @Override
     public void mousePressed(MouseEvent e)
     {  
-        if(e.getButton() == MouseEvent.BUTTON1) {
-            switch(mode) {
-                case EditPoly:
-                    System.out.println("ASDASD");
-                        if(selected != null) {
-                            boolean near = false;
-                            //double closest = 20000;
-                            for(Point p : selected.points) {
-                                //if(Point.dist(new Point(e.getX(), e.getY()), p) < closest) {
-                                //    closest = Point.dist(new Point(e.getX(), e.getY()), p);
-                                //}
-                                if(Point.dist(new Point(e.getX(), e.getY()), p) < 10) {
-                                    grabbed = p;
-                                    selected.edit();
-                                    selected.generatePoly();
-                                    near = true;
+        switch(global) {
+            case EditMode:
+                if(e.getButton() == MouseEvent.BUTTON1) {
+                    switch(mode) {
+                        case EditPoly:
+                            System.out.println("ASDASD");
+                                if(selected != null) {
+                                    boolean near = false;
+                                    //double closest = 20000;
+                                    for(Point p : selected.points) {
+                                        //if(Point.dist(new Point(e.getX(), e.getY()), p) < closest) {
+                                        //    closest = Point.dist(new Point(e.getX(), e.getY()), p);
+                                        //}
+                                        if(Point.dist(new Point(e.getX(), e.getY()), p) < 10) {
+                                            grabbed = p;
+                                            selected.edit();
+                                            selected.generatePoly();
+                                            near = true;
 
+                                        }
+                                    }
+
+                                    if(!near) {
+                                        mode = Mode.Limbo;
+                                        manager.deselect();
+                                        manager.unhighlight();
+                                    }
                                 }
-                            }
+                            break;
 
-                            if(!near) {
-                                mode = Mode.Limbo;
-                                manager.deselect();
-                                manager.unhighlight();
-                            }
-                        }
-                    break;
-
-                default:
+                        default:
 
 
-                    break;
-            }
+                            break;
+                    }
+                }
+                break;
         }
         //this.repaint();
     }
@@ -192,82 +211,81 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getButton() == MouseEvent.BUTTON1) {
-            System.out.println("mode: " + mode.toString());
-            switch(mode){
-                case AddPoly:
+        switch(global) {
+            case DrawMode:
+                if(e.getButton() == MouseEvent.BUTTON1) {
+                    System.out.println("mode: " + mode.toString());
+                    switch(mode){
+                        case AddPoly:
 
-                        po = new PolygonObject();
-                        Random gen = new Random();
-                        po.setColor(gen.nextInt(256), gen.nextInt(256), gen.nextInt(256));
-                        first = new Point(e.getX(), e.getY());
-                        po.addPoint(e.getX(), e.getY());
-                        mode = Mode.AddPoint;
-                        System.out.println("MOUSEI:" + e.getX() + " - " + e.getY());
-                        lb.setUndo(true);
-                    break;
-
-
-                case AddPoint:
-                        if(po != null) {
-                            if(Point.dist(new Point(e.getX(), e.getY()), first) < 10) {
-                                po.generatePoly();
-                                mode = Mode.View;
-                                po.setName("DEFAULT");
-                                String name = null;
-                                name =  JOptionPane.showInputDialog ( "Enter object name:" );
-                                if(name==null) name = "";
-                                
-                                po.setName(name);
-                                manager.addObject(po);
-                                manager.select(po);
-                                selected = manager.getSelected();
-                                po = null;
-                                mode = Mode.EditPoly;
-                                justMade = true;
-
-                            } else {
+                                po = new PolygonObject();
+                                Random gen = new Random();
+                                po.setColor(gen.nextInt(256), gen.nextInt(256), gen.nextInt(256));
+                                first = new Point(e.getX(), e.getY());
                                 po.addPoint(e.getX(), e.getY());
-                                System.out.println("MOUSE:" + e.getX() + " - " + e.getY());
+                                mode = Mode.AddPoint;
+                                System.out.println("MOUSEI:" + e.getX() + " - " + e.getY());
+                                lb.setUndo(true);
+                            break;
 
-                            }
 
-                        }
-                    break;
+                        case AddPoint:
+                                if(po != null) {
+                                    if(Point.dist(new Point(e.getX(), e.getY()), first) < 10) {
+                                        po.generatePoly();
+                                        mode = Mode.View;
+                                        po.setName("DEFAULT");
+                                        String name = null;
+                                        name =  JOptionPane.showInputDialog ( "Enter object name:" );
+                                        if(name==null) name = "";
 
-                case EditPoly:
-                        
-                            if(justMade) {
+                                        po.setName(name);
+                                        manager.addObject(po);
+                                        manager.select(po);
+                                        selected = manager.getSelected();
+                                        po = null;
+                                        mode = Mode.EditPoly;
+
+                                    } else {
+                                        po.addPoint(e.getX(), e.getY());
+                                        System.out.println("MOUSE:" + e.getX() + " - " + e.getY());
+
+                                    }
+
+                                }
+                            break;
+
+                        case EditPoly:
+
+
+
+
+
+                            break;
+
+
+                        case View:
+
+
+                            break;
+
+                        case Limbo2:
                                 mode = Mode.AddPoly;
-                                justMade = false;
-                                selected = null;
-                            }
+                                break;  
 
-
-
-                    break;
-
-
-                case View:
-
-
-                    break;
-
-                case Limbo2:
-                        mode = Mode.AddPoly;
-                        break;  
-
-                case Limbo:
-                        mode = Mode.AddPoly;
-                        break;
+                        case Limbo:
+                                mode = Mode.AddPoly;
+                                break;
 
 
 
 
-                default:
-                    break;
+                        default:
+                            break;
 
-            }
+                    }
+                }
+                break;
         }
         System.out.println("mode after: " + mode.toString());
         
