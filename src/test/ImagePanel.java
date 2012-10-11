@@ -244,8 +244,6 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                             }
 
 
-                        
-
 
                     break;
 
@@ -289,8 +287,9 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 
                 if(manager!=null) {
                     for(PolygonObject O : manager.objects) {
-                        if(!O.isSelected()) 
-                        O.draw(g, false, scale);
+                        if(!O.isSelected()) {
+                            O.draw(g, false, scale);
+                        }
                     }
                 }
                 
@@ -303,15 +302,16 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 if(highlight != null) {
                     highlight.draw(g,true, scale);
                 }
-                
-                if(manager.getSelected()!=null) {
-                   manager.getSelected().draw( g, false, scale);
-                }
-                
+
+                if(manager != null) {
+                    if(manager.getSelected()!=null) {
+                        manager.getSelected().draw( g, false, scale);
+                    }
                 
 		
 		
 	}
+    }
     
     public double loadImage(String file) {
         
