@@ -22,7 +22,7 @@ import javax.swing.Timer;
 
 /**
  *
- * @author s0935850
+ * @author Matthew Shepherd <s0935850> and Robert Evans <s0949775>
  */
 public class ImagePanel extends JPanel implements MouseListener, MouseMotionListener {
     

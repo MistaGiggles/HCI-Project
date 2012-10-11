@@ -11,7 +11,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
- * @author s0935850
+ * @author Matthew Shepherd <s0935850> and Robert Evans <s0949775>
  * 
  * Custom tree listener to react to different nodes being selected
  * 

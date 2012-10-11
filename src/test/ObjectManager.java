@@ -9,7 +9,7 @@ import javax.swing.tree.TreePath;
 
 /**
  *
- * @author Matthwew Shepherd <s0935850>
+ * @author Matthew Shepherd <s0935850> and Robert Evans <s0949775>
  * Used to store a list of defined polygon objects.
  * Also handles which polygon has been selected & displaying them on the tree
  */
