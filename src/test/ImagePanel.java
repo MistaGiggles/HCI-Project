@@ -302,7 +302,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 if(highlight != null) {
                     highlight.draw(g,true, scale);
                 }
-<<<<<<<
+
                 if(manager != null) {
                     if(manager.getSelected()!=null) {
                         manager.getSelected().draw( g, false, scale);
@@ -311,6 +311,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
 		
 		
 	}
+    }
     
     public double loadImage(String file) {
         
