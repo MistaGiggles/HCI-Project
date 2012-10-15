@@ -15,12 +15,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import javax.swing.JToggleButton;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 /*
  * To change this template, choose Tools | Templates
@@ -67,12 +67,14 @@ public class LABELTEST extends javax.swing.JFrame {
         //DefaultMutableTreeNode category = new DefaultMutableTreeNode("Books for Java Programmers");
         //rootNode.add(category);
        
+        
 
         imagePanel1.manager = new ObjectManager(this);
 
         jTree1.setModel(treeModel);
         jTree1.setCellRenderer(new MyRenderer(imagePanel1.manager));
         jTree1.addTreeSelectionListener(new MyTreeListener(imagePanel1.manager, jTree1, imagePanel1));
+        jTree1.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
         final ActionListener menuListener = new ActionListener() {
             public void actionPerformed(ActionEvent event) {

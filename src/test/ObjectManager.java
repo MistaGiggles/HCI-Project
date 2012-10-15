@@ -70,6 +70,7 @@ public class ObjectManager {
          tree.add(node);
          lb.setUnsavedChanges(true);
          jt.setSelectionPath(new TreePath(model.getPathToRoot(node)));
+         
         
         update();
     }
@@ -120,6 +121,35 @@ public class ObjectManager {
     public void unhighlight() {
         jt.setSelectionPath(new TreePath(model.getPathToRoot(tree.getRoot())));
     }
+    
+    
+    public void highlight(PolygonObject po) {
+        //Object o = walk(model, model.getRoot(), hash);
+        //jt.setSelectionPath(new TreePath(new Object[] {tree.getRoot(), o }));
+        
+        jt.setSelectionPath( new TreePath( po.node.getPath() ) );
+    }
+    
+    
+    
+    Object walk(MyTreeModel model, Object o, int hash){
+    int  cc;
+    cc = model.getChildCount(o);
+    for( int i=0; i < cc; i++) {
+      Object child = model.getChild(o, i );
+      
+      if (model.isLeaf(child)) {
+            if(child.hashCode() == hash) {
+                return child;
+            }
+          else {
+            //System.out.print(child.toString()+"--");
+            return walk(model,child, hash ); 
+            }
+        }
+     }
+    return model.getRoot();
+   } 
     
     /*
      * Returns reference to the selected polygon

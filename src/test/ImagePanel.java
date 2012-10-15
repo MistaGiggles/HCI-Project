@@ -40,6 +40,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     PolygonObject highlight;
     PolygonObject selected;
     ArrayList<PolygonObject> panned;
+    int pannedSel;
     LABELTEST lb;
     Point grabbed;
     double scale;
@@ -57,6 +58,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         addMouseMotionListener(this);
         final ImagePanel p = this;
         panned = new ArrayList<PolygonObject>();
+        pannedSel = 0;
         
         ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -312,6 +314,17 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                     }
                 }
                 break;
+                
+            case EditMode:
+                    if(panned!= null && panned.size() > 0 && pannedSel < panned.size()) {
+                        manager.select(panned.get(pannedSel));
+                        selected = panned.get(pannedSel);
+                        manager.highlight(panned.get(pannedSel));
+                        pannedSel++;
+                        mode = Mode.EditPoly;
+                    } else {
+                        pannedSel = 0;
+                    }
         }
         //System.out.println("mode after: " + mode.toString());
         

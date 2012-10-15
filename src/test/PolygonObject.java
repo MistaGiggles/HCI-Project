@@ -42,6 +42,10 @@ public class PolygonObject {
         isValid = false;
     }
     
+    public void setNode(DefaultMutableTreeNode n) {
+        node = n;
+    }
+    
     public int  removeLastPoint() {
         if(points.size() > 0) {
             
