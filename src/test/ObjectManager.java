@@ -60,7 +60,7 @@ public class ObjectManager {
     public void addObject(PolygonObject po) {
         
         
-        System.out.println("ADDING: " + po.getName());
+        //System.out.println("ADDING: " + po.getName());
         objects.add(po);
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(po);
         po.node = node;

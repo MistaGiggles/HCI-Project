@@ -116,49 +116,21 @@ public class PolygonObject {
      * Draws the polygon with Graphics g. Handles the drawing of
      * an uncomplete poly, a complete poly and a selected poly
      * @param g Graphics object to draw with
-     * @param shade NOT USED
-     * @param scale NOT USED
+     * @param fill Whether to fill polygon or not
+     * @param vertices whether to draw vertice points
      */
-    public void draw(Graphics g, boolean shade, double scale)
+    public void draw(Graphics g, boolean fill, boolean vertices)
     {
         g.setColor(color);
         Graphics2D g2 = (Graphics2D) g;
-        //g2.scale(scale, scale);
-        g2.setStroke(new BasicStroke(7.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,10.0f));
-
-        if(shade) {
-            if(poly!=null) {
-                
-                
-                    g2.setColor(color);
-                    g2.drawPolygon(poly);
-                    g2.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 100));
-                    g2.fillPolygon(poly);
-
-
-                
-            }
-            
-            
-            
-            return;
-        }
         
-        if(points.size() == 1) {
-            if(temp != null)
-                g2.drawLine(points.get(0) .x,points.get(0).y, temp.x, temp.y);
-                g2.setColor(color);
-                g2.fillOval(points.get(0).x - 6,  points.get(0).y -6 , 12, 12);
-                g2.setColor(new Color(255-color.getRed(), 255-color.getGreen(), 255-color.getBlue()));
-                g2.drawOval(points.get(0).x -6,  points.get(0).y -6, 12, 12);
-                g2.setColor(color);
-            return;
-        }
-        if(poly == null) {
-            
+        g2.setStroke(new BasicStroke(7.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,10.0f));
+        
+        // Polygon is incomplete
+        if(poly==null) {
             Point prev = null;
             boolean first = true;
-            
+            // Draw n-1 lines
             for(Point p : points)
             {
                 if(!first) {
@@ -167,12 +139,12 @@ public class PolygonObject {
                 first = false;
                 prev = p;
             }
-            
+            // draw last line (ie to mouse)
             if(temp != null && prev != null) {
                 g2.drawLine(prev.x, prev.y, temp.x, temp.y);
                 
             }
-            
+            // draw invertred color oval over start point
             if(points.size() > 0) {
             
                 g2.setColor(color);
@@ -181,37 +153,32 @@ public class PolygonObject {
                 g2.drawOval(points.get(0).x -6,  points.get(0).y -6, 12, 12);
                 g2.setColor(color);
             }
-            
-            
         } else {
             g.setColor(color);
-            
             g2.setStroke(new BasicStroke(6.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,8.0f));
-            
             g2.drawPolygon(poly);
-            g2.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 100));
             
-                
+            if(fill) {
+                g2.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 100));
+                g2.fillPolygon(poly);
+            }
+            
+            if(vertices) {
+                 for(Point p : points) {
+                    g2.setColor(color);
+                    g2.fillOval(p.x - 6, p.y -6 , 12, 12);
+                    g2.setColor(new Color(255-color.getRed(), 255-color.getGreen(), 255-color.getBlue()));
+                    g2.drawOval(p.x -6, p.y -6, 12, 12);
+                 }
+                   
+            }
             
         }
         
-        if(isSelected) {
-            if(poly!=null) {
-                g2.fillPolygon(poly);
-                for(Point p : points) {
-                    //g2.scale(scale, scale);
-                    g2.setColor(color);
-                    if(!shade)
-                        g2.fillOval(p.x - 6, p.y -6 , 12, 12);
-                    g2.setColor(new Color(255-color.getRed(), 255-color.getGreen(), 255-color.getBlue()));
-                    if(!shade)
-                        g2.drawOval(p.x -6, p.y -6, 12, 12);
-                    //g2.scale(1, 1);
-
-
-                }
-            }
-        }
+        
+        
+        
+       
         
     }
     

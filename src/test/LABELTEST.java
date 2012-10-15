@@ -39,7 +39,10 @@ public class LABELTEST extends javax.swing.JFrame {
     private DefaultMutableTreeNode rootNode;
 
 
-
+    /** 
+     * Used to flag unsaved changes
+     * b boolean for the flag
+     */
     public void setUnsavedChanges(boolean b) {
 
         _unsavedChanges = b;
@@ -127,6 +130,7 @@ public class LABELTEST extends javax.swing.JFrame {
         
 
         setUnsavedChanges(false);
+        drawMode();
 
     }
     
@@ -167,6 +171,7 @@ public class LABELTEST extends javax.swing.JFrame {
       }
       if (rVal == JFileChooser.CANCEL_OPTION) {
       }
+      editMode();
     }
 
     private void save() {
@@ -229,10 +234,18 @@ public class LABELTEST extends javax.swing.JFrame {
 
     private void editMode() {
         imagePanel1.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+        imagePanel1.setEdit();
+        jButton8.getModel().setPressed(false);
+        jButton9.getModel().setPressed(true);
+        
     }
 
     private void drawMode() {
         imagePanel1.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        imagePanel1.setDraw();
+        jButton8.getModel().setPressed(true);
+        jButton9.getModel().setPressed(false);
+        
     }
 
     private class MyRenderer extends DefaultTreeCellRenderer {

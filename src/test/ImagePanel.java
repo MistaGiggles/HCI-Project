@@ -14,6 +14,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -38,6 +39,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     ObjectManager manager;
     PolygonObject highlight;
     PolygonObject selected;
+    ArrayList<PolygonObject> panned;
     LABELTEST lb;
     Point grabbed;
     double scale;
@@ -54,6 +56,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         addMouseListener(this);
         addMouseMotionListener(this);
         final ImagePanel p = this;
+        panned = new ArrayList<PolygonObject>();
         
         ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -71,11 +74,20 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     }
     
     public void setEdit() {
+        if(mode==Mode.AddPoint) {
+            po = null;
+        }
         global = GlobalMode.EditMode;
+        mode = Mode.EditPoly;
     }
     
     public void setDraw() {
         global = GlobalMode.DrawMode;
+        if(mode==Mode.AddPoint) {
+            
+        } else {
+            mode=Mode.AddPoly;
+        }
     }
     
     public void setLB(LABELTEST _lb) {
@@ -90,6 +102,18 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
             po.temp = new Point(e.getX(), e.getY());
             
             
+        }
+        
+        if(global==GlobalMode.EditMode) {
+            panned = new ArrayList<PolygonObject>();
+            
+            for(PolygonObject O: manager.objects) {
+                if(O.poly != null) {
+                    if(O.poly.contains(e.getX(), e.getY())) {
+                       panned.add(O);
+                    }
+                }
+            }
         }
         
         // do detection for "selected" object
@@ -173,7 +197,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 if(e.getButton() == MouseEvent.BUTTON1) {
                     switch(mode) {
                         case EditPoly:
-                            System.out.println("ASDASD");
+                            //System.out.println("ASDASD");
                                 if(selected != null) {
                                     boolean near = false;
                                     //double closest = 20000;
@@ -215,7 +239,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         switch(global) {
             case DrawMode:
                 if(e.getButton() == MouseEvent.BUTTON1) {
-                    System.out.println("mode: " + mode.toString());
+                    //System.out.println("mode: " + mode.toString());
                     switch(mode){
                         case AddPoly:
 
@@ -225,7 +249,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                                 first = new Point(e.getX(), e.getY());
                                 po.addPoint(e.getX(), e.getY());
                                 mode = Mode.AddPoint;
-                                System.out.println("MOUSEI:" + e.getX() + " - " + e.getY());
+                                //System.out.println("MOUSEI:" + e.getX() + " - " + e.getY());
                                 lb.setUndo(true);
                             break;
 
@@ -243,14 +267,14 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                                         po.setName(name);
                                         manager.addObject(po);
                                         manager.select(po);
-                                        //selected = manager.getSelected();
+                                        selected = manager.getSelected();
                                         highlight = po;
                                         po = null;
                                         mode = Mode.AddPoly;
 
                                     } else {
                                         po.addPoint(e.getX(), e.getY());
-                                        System.out.println("MOUSE:" + e.getX() + " - " + e.getY());
+                                        //System.out.println("MOUSE:" + e.getX() + " - " + e.getY());
 
                                     }
 
@@ -289,7 +313,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                 }
                 break;
         }
-        System.out.println("mode after: " + mode.toString());
+        //System.out.println("mode after: " + mode.toString());
         
     }
     
@@ -299,54 +323,55 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
 		super.paint(g);
 		
                 if (image != null) {
-                            g.drawImage(
-                                            image, 0, 0, null);
-                    }
+                            g.drawImage( image, 0, 0, null);
+                }
                 
-                if(global == GlobalMode.DrawMode) {
-                    
-                    manager.deselect();
-
-                    if(manager!=null) {
+               if(manager!=null) {
                         for(PolygonObject O : manager.objects) {
-                            if(O.isSelected()) {
-                                O.draw(g, true, scale);
-                            } else {
-                                O.draw(g,false,scale);
+                            switch(global) {
+                                case EditMode:
+                                    if(O.isSelected()) {
+                                        //O.draw(g, true, true);
+                                    } else {
+                                        O.draw(g, false, false);
+                                    }
+                                    
+                                    break;
+                                    
+                                case DrawMode:
+                                    if(O.isSelected()) {
+                                        O.draw(g, true, false);
+                                        
+                                    } else {
+                                        O.draw(g, false, false);
+                                    }
+                                    break;
                             }
                             
                         }
-                    }
+                    } 
+
+                    
 
                     if(po!=null)
                     {
-                        po.draw(g, false, scale);
+                        po.draw(g, false, false);
                     }
 
-
-                    
-
-                }
-                
-                
-                if(global == GlobalMode.EditMode) {
-                    
-                    if(manager!=null) {
-                        for(PolygonObject O : manager.objects) {
-                            if(!O.isSelected()) {
-                                O.draw(g, false, scale);
-                            }
+                    if(global==GlobalMode.EditMode) {
+                        if(manager.getSelected() != null) {
+                            manager.getSelected().draw(g, true, true);
                         }
                     }
-                    if(manager != null) {
-                        if(manager.getSelected()!=null) {
-                            manager.getSelected().draw( g, true, scale);
-                        }
                     
-                }
+
+                
+                
+                
+                
                 
 		
-                }
+                
     }
     
     public double loadImage(String file) {
