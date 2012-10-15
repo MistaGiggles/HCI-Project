@@ -54,7 +54,11 @@ public class MyTreeListener implements TreeSelectionListener {
             panel.mode = ImagePanel.Mode.Limbo2;
             return;
         }
-        panel.mode = ImagePanel.Mode.EditPoly;
+        if(panel.global == ImagePanel.GlobalMode.DrawMode) {
+            
+        } else {
+            panel.mode = ImagePanel.Mode.EditPoly;
+        }
     }
     
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+   "http://www.w3.org/TR/html4/frameset.dtd">
+<HTML>
+<HEAD>
+<TITLE>Help</TITLE>
+</HEAD>
+<body>
+<p><font size="15">LABELME</font></p>
+<img src="overview.png"  />
+        <p />
+        <p />
+<table><tr>
+<td width="63%"><p><font size="5">Labeling instructions</font></p>
+	    <p>When you enter the tool, an image from the database will be randomly 
+          selected and shown. You can help by annotating as many objects as you 
+          can. 
+	    Note that
+	    previously labeled objects may appear on the image.  
+	    Please do not label previously labeled objects.
+	  Once you have completed the image, you can view a new image 
+          by pressing the "show next image" button.</p>
+
+	  <p>The following steps describe how to label an object:</p>
+
+	  <p>
+	  1. Start by pressing the left 
+          mouse button at some point along the boundary of the object.
+	  <br>2. Continue clicking along the boundary of the object
+          to create a polygon.
+	  <br>3. Once you have finished
+          clicking along the boundary of the object click on
+          the first point (highlighted).
+	  <br>4. A window will now appear asking for the object's
+          name.  Enter the object's name and click the "Done" button.
+	  </p>
+
+        </td></tr></table>
+
+
+<p><font size="5">Draw and Edit Modes</font></p>
+<img src="images/modes.png" />
+<p>There are two modes, Draw Mode and Edit Mode. While in Draw Mode it is only possible to draw new shapes and name them, you must switch to Edit Mode in order to manipulate existing shapes.</p>
+<p />
+
+<p><font size="5">Saving and Loading</font></p>
+<img src="images/saveload.png" />
+<p>Images can be loaded by clicking the "Folder" button. Annotations are named by "imagename".xml and if there is a matching file then that annotation will be loaded too.</p>
+<p>The save button will save the annotations as a new file by the name "imagename".xml.</p>
+<p />
+
+<p><font size="5">Renaming and Deleting</font></p>
+<p>Renaming or Deleting an object can be acheived by right clicking on it's name in the right hand list. When renaming is chosen a text input dialog will be displayed requesting the new name. Choosing delete will remove the object for good, there is no confirmation dialog.</p>
+<p />
+
+<p><font size="5">Import Images and Annotations from LabelMe website</font></p>
+<img src="images/import.png" />
+<p>Images from the LabelMe Website can be imported into this application by using the two links on the website.</p>
+<p>To do this download and save the image using the "img" button and then download and save the XML file ("xml" button) but rename it's filename to match the image's filename + ".xml"</p>
+<p />
+</body>
+
