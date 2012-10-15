@@ -37,6 +37,7 @@ public class LABELTEST extends javax.swing.JFrame {
 
      MyTreeModel treeModel;
     private DefaultMutableTreeNode rootNode;
+    HelpTest helpForm;
 
 
     /** 
@@ -58,6 +59,8 @@ public class LABELTEST extends javax.swing.JFrame {
         
         setRedo(false);
         setUndo(false);
+        
+        
         
         imagePanel1.setLB(this);
         imagePanel1.loadImage(filepath);
@@ -146,11 +149,16 @@ public class LABELTEST extends javax.swing.JFrame {
         jMenuItem4.setEnabled(b);
     }
     
+    public void showHelp() {
+        HelpTest a = new HelpTest("HELP", "help.html");
+        a.setVisible(true);
+    }
+    
     public void removeNodes() {
         //for(int i =0 ;i < rootNode.getChildCount(); i++) {
         //    treeModel.removeNodeFromParent(rootNode.getChildAt(i));
         //}
-        rootNode = new DefaultMutableTreeNode("Root Node");
+        rootNode = new DefaultMutableTreeNode("Objects");
         treeModel = new MyTreeModel(rootNode);
         imagePanel1.manager.setWorkingTree(rootNode);
         jTree1.setModel(treeModel);
@@ -595,6 +603,7 @@ public class LABELTEST extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
+        showHelp();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

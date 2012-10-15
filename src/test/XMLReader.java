@@ -39,7 +39,7 @@ public class XMLReader {
      */
     public void openXML(ObjectManager manager, double scale) {
         
-        manager.objects = new ArrayList<PolygonObject>();
+        
         
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -53,15 +53,18 @@ public class XMLReader {
 
 
             }catch(ParserConfigurationException pce) {
-                    pce.printStackTrace();
+                    //pce.printStackTrace();
+                    return;
             }catch(SAXException se) {
-                    se.printStackTrace();
+                    //se.printStackTrace();
+                    return;
             }catch(IOException ioe) {
-                    ioe.printStackTrace();
+                    //ioe.printStackTrace();
+                    return;
             }
 
             System.out.println("LOADED");
-
+            manager.objects = new ArrayList<PolygonObject>();
 
             Element docEle = dom.getDocumentElement();
 
