@@ -107,7 +107,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         }
 
         if (global == GlobalMode.EditMode) {
-            panned = new ArrayList<PolygonObject>();
+            panned = new ArrayList<PolygonObject>();  
 
             for (PolygonObject O : manager.objects) {
                 if (O.poly != null) {
@@ -129,6 +129,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     public void mouseDragged(MouseEvent e) {
         switch (global) {
             case EditMode:
+                lb.setUnsavedChanges(true);
                 switch (mode) {
                     case EditPoly:
 
