@@ -2,23 +2,15 @@
    "http://www.w3.org/TR/html4/frameset.dtd">
 <HTML>
 <HEAD>
-<TITLE>Help</TITLE>
+<TITLE>Label Annotator</TITLE>
 </HEAD>
 <body>
-<p><font size="15">LABELME</font></p>
+<p><font size="15">HELP</font></p>
 <img src="overview.png"  />
         <p />
         <p />
 <table><tr>
-<td width="63%"><p><font size="5">Labeling instructions</font></p>
-	    <p>When you enter the tool, an image from the database will be randomly 
-          selected and shown. You can help by annotating as many objects as you 
-          can. 
-	    Note that
-	    previously labeled objects may appear on the image.  
-	    Please do not label previously labeled objects.
-	  Once you have completed the image, you can view a new image 
-          by pressing the "show next image" button.</p>
+<td width="63%"><p><font size="5">Labelling instructions</font></p>
 
 	  <p>The following steps describe how to label an object:</p>
 
@@ -39,23 +31,31 @@
 
 <p><font size="5">Draw and Edit Modes</font></p>
 <img src="images/modes.png" />
-<p>There are two modes, Draw Mode and Edit Mode. While in Draw Mode it is only possible to draw new shapes and name them, you must switch to Edit Mode in order to manipulate existing shapes.</p>
+<p>There are two modes, Draw Mode and Edit Mode. While in Draw Mode it is only possible to draw new shapes and name them, you must switch to Edit Mode in order to manipulate existing shapes.  When in edit mode, you can click and drag on the highlighted corner points of shapes to move them.  To select a different shape, either click on it in the right hand list, or click inside the shape.  If there are several shapes overlapping then multiple clicks within the overlapping area will cycle through the overlapping shapes.</p>
 <p />
 
 <p><font size="5">Saving and Loading</font></p>
 <img src="images/saveload.png" />
-<p>Images can be loaded by clicking the "Folder" button. Annotations are named by "imagename".xml and if there is a matching file then that annotation will be loaded too.</p>
-<p>The save button will save the annotations as a new file by the name "imagename".xml.</p>
+<p>Images can be loaded by clicking the "Folder" button.  Choose an image file, eg "image.jpg". Label sets are named as 'image.jpg.xml' and if one is present for the selected image it will be loaded automatically.</p>
+<p>The save button will save the label set as a new file by the name "image.jpg.xml".</p>
 <p />
 
 <p><font size="5">Renaming and Deleting</font></p>
-<p>Renaming or Deleting an object can be acheived by right clicking on it's name in the right hand list. When renaming is chosen a text input dialog will be displayed requesting the new name. Choosing delete will remove the object for good, there is no confirmation dialog.</p>
+<p>Renaming or deleting an object can be achieved by right clicking the name in the right hand list. When renaming is chosen a text input dialogue will be displayed requesting the new name. Choosing delete will remove the object for good, there is no confirmation dialogue.</p>
 <p />
 
-<p><font size="5">Import Images and Annotations from LabelMe website</font></p>
-<img src="images/import.png" />
-<p>Images from the LabelMe Website can be imported into this application by using the two links on the website.</p>
-<p>To do this download and save the image using the "img" button and then download and save the XML file ("xml" button) but rename it's filename to match the image's filename + ".xml"</p>
+<p><font size="5">Undo and Redo</font></p>
+<img src="images/undoredo.png" />
+<p>While an object is being drawn, points on the polygon can be undone and redone by clicking the toolbar buttons, or by keyboard shortcuts (Ctrl+Z and Ctrl+Y). This facility allows mistakes to be corrected before completing the polygon.</p>
 <p />
+
+<p><font size="5">Compatibility with Images and Annotations from the LabelMe website</font></p>
+<p>Images from the LabelMe Website (http://labelme.csail.mit.edu/tool.html) can be imported into this application by using the two links on the website (named IMG and XML, as shown below).</p>
+<p>To do this download and save the image using the "img" button and then download and save the XML file ("xml" button) but rename the XML file to match the image's filename + ".xml".  For example, if the image file is "image.jpg" the XML file must be named "image.jpg.xml"</p>
+<p />
+<img src="images/import.png" />
 </body>
+
+
+
 
