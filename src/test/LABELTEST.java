@@ -78,15 +78,13 @@ public class LABELTEST extends javax.swing.JFrame {
 
         final ActionListener menuListener = new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                System.out.println("Popup menu item ["
-                        + event.getActionCommand() + "] was pressed.");
                 PolygonObject po = imagePanel1.manager.getSelected();
                 if (po != null) {
                     if ("Rename".equals(event.getActionCommand())) {
                         String name = null;
-                        name = JOptionPane.showInputDialog("Enter object name:");
+                        name = JOptionPane.showInputDialog("Enter object name:",po.getName());
 
-                        if (name != null) {
+                        if (name != null && !name.equals(po.getName())) {
                             po.setName(name);
                             setUnsavedChanges(true);
                         }

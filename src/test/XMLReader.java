@@ -67,7 +67,7 @@ public class XMLReader {
             return;
         }
 
-        System.out.println("LOADED");
+        //System.out.println("LOADED");
         manager.objects = new ArrayList<PolygonObject>();
 
         Element docEle = dom.getDocumentElement();
@@ -100,7 +100,7 @@ public class XMLReader {
 
                         int x = Integer.parseInt(getTextValue(point, "x"));
                         int y = Integer.parseInt(getTextValue(point, "y"));
-                        System.out.println("POINT: " + x * scale + ", " + y * scale);
+                        //System.out.println("POINT: " + x * scale + ", " + y * scale);
                         po.addPoint((int) (x * scale), (int) (y * scale));
                         //po.addPoint(x,y);
 
