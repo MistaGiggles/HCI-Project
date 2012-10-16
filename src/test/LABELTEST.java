@@ -84,12 +84,11 @@ public class LABELTEST extends javax.swing.JFrame {
                 if (po != null) {
                     if ("Rename".equals(event.getActionCommand())) {
                         String name = null;
-                        while (name == null) {
-                            name = JOptionPane.showInputDialog("Enter object name:");
-                        }
+                        name = JOptionPane.showInputDialog("Enter object name:");
 
                         if (name != null) {
                             po.setName(name);
+                            setUnsavedChanges(true);
                         }
                         jTree1.updateUI();
                     }
@@ -98,6 +97,7 @@ public class LABELTEST extends javax.swing.JFrame {
                         if (imagePanel1.manager.objects.size() == 0) {
                             imagePanel1.mode = ImagePanel.Mode.AddPoly;
                         }
+                        setUnsavedChanges(true);
                     }
                 }
             }

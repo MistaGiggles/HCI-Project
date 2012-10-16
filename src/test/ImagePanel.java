@@ -107,7 +107,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
         }
 
         if (global == GlobalMode.EditMode) {
-            panned = new ArrayList<PolygonObject>();  
+            panned = new ArrayList<PolygonObject>();
 
             for (PolygonObject O : manager.objects) {
                 if (O.poly != null) {
@@ -129,10 +129,9 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     public void mouseDragged(MouseEvent e) {
         switch (global) {
             case EditMode:
-                lb.setUnsavedChanges(true);
                 switch (mode) {
                     case EditPoly:
-
+                        lb.setUnsavedChanges(true);
                         if (grabbed != null) {
                             grabbed.x = e.getX();
                             grabbed.y = e.getY();
@@ -253,17 +252,15 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                                     po.setName("DEFAULT");
                                     String name = null;
                                     name = JOptionPane.showInputDialog("Enter object name:");
-                                    if (name == null) {
-                                        name = "";
+                                    if (name != null) {
+                                        po.setName(name);
+                                        manager.addObject(po);
+                                        manager.select(po);
+                                        selected = manager.getSelected();
+                                        highlight = po;
                                     }
-
-                                    po.setName(name);
-                                    manager.addObject(po);
-                                    manager.select(po);
-                                    selected = manager.getSelected();
-                                    highlight = po;
-                                    po = null;
-                                    mode = Mode.AddPoly;
+                                        po = null;
+                                        mode = Mode.AddPoly;
 
                                 } else {
                                     po.addPoint(e.getX(), e.getY());
@@ -273,35 +270,18 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
 
                             }
                             break;
-
                         case EditPoly:
-
-
-
-
-
                             break;
-
-
                         case View:
-
-
                             break;
-
                         case Limbo2:
                             mode = Mode.AddPoly;
                             break;
-
                         case Limbo:
                             mode = Mode.AddPoly;
                             break;
-
-
-
-
                         default:
                             break;
-
                     }
                 }
                 break;
