@@ -1,4 +1,3 @@
-
 package test;
 
 import java.awt.Graphics;
@@ -11,30 +10,29 @@ import javax.imageio.ImageIO;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Matthew Shepherd <s0935850> and Robert Evans <s0949775>
  */
 public class Form1 extends javax.swing.JPanel {
+
     BufferedImage image;
+
     /**
      * Creates new form Form1
      */
-    public Form1()  throws Exception {
-        
-        
-        
-        
+    public Form1() throws Exception {
+
+
+
+
         initComponents();
-        
+
         imagePanel1.loadImage("image.jpg");
- 
-        
-        
+
+
+
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

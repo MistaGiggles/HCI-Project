@@ -34,15 +34,12 @@ public class LABELTEST extends javax.swing.JFrame {
 
     private String filepath = "image.jpg";
     private boolean _unsavedChanges;  // set this variable true when the first change after a save is made
-
-     MyTreeModel treeModel;
+    MyTreeModel treeModel;
     private DefaultMutableTreeNode rootNode;
     HelpWindow helpForm;
 
-
-    /** 
-     * Used to flag unsaved changes
-     * b boolean for the flag
+    /**
+     * Used to flag unsaved changes b boolean for the flag
      */
     public void setUnsavedChanges(boolean b) {
 
@@ -56,23 +53,23 @@ public class LABELTEST extends javax.swing.JFrame {
      */
     public LABELTEST() {
         initComponents();
-        
+
         setRedo(false);
         setUndo(false);
-        
-        
-        
+
+
+
         imagePanel1.setLB(this);
-        imagePanel1.loadImage(filepath);
         jToolBar1.setSize(100, 100);
         rootNode = new DefaultMutableTreeNode("Objects");
         treeModel = new MyTreeModel(rootNode);
         //DefaultMutableTreeNode category = new DefaultMutableTreeNode("Books for Java Programmers");
         //rootNode.add(category);
-       
-        
+
+
 
         imagePanel1.manager = new ObjectManager(this);
+
 
         jTree1.setModel(treeModel);
         jTree1.setCellRenderer(new MyRenderer(imagePanel1.manager));
@@ -87,10 +84,10 @@ public class LABELTEST extends javax.swing.JFrame {
                 if (po != null) {
                     if ("Rename".equals(event.getActionCommand())) {
                         String name = null;
-                        while(name==null) {
-                            name =  JOptionPane.showInputDialog ( "Enter object name:" ); 
+                        while (name == null) {
+                            name = JOptionPane.showInputDialog("Enter object name:");
                         }
-                        
+
                         if (name != null) {
                             po.setName(name);
                         }
@@ -98,7 +95,7 @@ public class LABELTEST extends javax.swing.JFrame {
                     }
                     if ("Delete".equals(event.getActionCommand())) {
                         imagePanel1.manager.deleteObject(po);
-                        if(imagePanel1.manager.objects.size() == 0) {
+                        if (imagePanel1.manager.objects.size() == 0) {
                             imagePanel1.mode = ImagePanel.Mode.AddPoly;
                         }
                     }
@@ -126,34 +123,38 @@ public class LABELTEST extends javax.swing.JFrame {
             }
         });
 
-        
+
 
         imagePanel1.manager.setWorkingTree(rootNode);
         imagePanel1.manager.jt = jTree1;
 
         imagePanel1.manager.model = treeModel;
-        
 
+        // Load in in image and label set
+        double scale = imagePanel1.loadImage(filepath);
+        XMLReader rd = new XMLReader(filepath + ".xml");
+        removeNodes();
+        rd.openXML(imagePanel1.manager, scale);
         setUnsavedChanges(false);
         drawMode();
 
     }
-    
+
     public void setUndo(boolean b) {
         jButton5.setEnabled(b);
         jMenuItem3.setEnabled(b);
     }
-    
+
     public void setRedo(boolean b) {
         jButton6.setEnabled(b);
         jMenuItem4.setEnabled(b);
     }
-    
+
     public void showHelp() {
         HelpWindow a = new HelpWindow("HELP", "help/help.html");
         a.setVisible(true);
     }
-    
+
     public void removeNodes() {
         //for(int i =0 ;i < rootNode.getChildCount(); i++) {
         //    treeModel.removeNodeFromParent(rootNode.getChildAt(i));
@@ -163,64 +164,63 @@ public class LABELTEST extends javax.swing.JFrame {
         imagePanel1.manager.setWorkingTree(rootNode);
         jTree1.setModel(treeModel);
         imagePanel1.manager.model = treeModel;
-        
+
     }
 
     private void open() {
 
-      JFileChooser c = new JFileChooser();
-      int rVal = c.showOpenDialog(LABELTEST.this);
-      if (rVal == JFileChooser.APPROVE_OPTION) {
-        filepath = (c.getSelectedFile().getPath());
-        double scale = imagePanel1.loadImage(filepath);
-        setUnsavedChanges(false);
-        XMLReader rd = new XMLReader(filepath + ".xml");
-        removeNodes();
-        rd.openXML(imagePanel1.manager, scale);
-        // TODO Also need to load and draw in new polygons
-      }
-      if (rVal == JFileChooser.CANCEL_OPTION) {
-      }
-      editMode();
+        JFileChooser c = new JFileChooser();
+        int rVal = c.showOpenDialog(LABELTEST.this);
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            filepath = (c.getSelectedFile().getPath());
+            double scale = imagePanel1.loadImage(filepath);
+            setUnsavedChanges(false);
+            XMLReader rd = new XMLReader(filepath + ".xml");
+            removeNodes();
+            rd.openXML(imagePanel1.manager, scale);
+        }
+        if (rVal == JFileChooser.CANCEL_OPTION) {
+        }
+        //editMode();
     }
 
     private void save() {
-      //JFileChooser c = new JFileChooser();
-      //int rVal = c.showSaveDialog(LABELTEST.this);
-      //if (rVal == JFileChooser.APPROVE_OPTION) {
+        //JFileChooser c = new JFileChooser();
+        //int rVal = c.showSaveDialog(LABELTEST.this);
+        //if (rVal == JFileChooser.APPROVE_OPTION) {
         //filepath = (c.getSelectedFile().getPath());
         // TODO Save polygon xml file to location c.getCurrentDirectory().toString()
         XMLBuilder b = new XMLBuilder(filepath + ".xml");
-        b.buildWrite(imagePanel1.manager, (double)1/imagePanel1.scale);
+        b.buildWrite(imagePanel1.manager, (double) 1 / imagePanel1.scale);
         setUnsavedChanges(false);
-      //}
-      //if (rVal == JFileChooser.CANCEL_OPTION) {
-      //}
+        //}
+        //if (rVal == JFileChooser.CANCEL_OPTION) {
+        //}
 
     }
-    
+
     public void undoAdd() {
-        if(imagePanel1.mode == ImagePanel.Mode.AddPoint) {
-            if(imagePanel1.po != null) {
-                if(imagePanel1.po.removeLastPoint() == 0) {
+        if (imagePanel1.mode == ImagePanel.Mode.AddPoint) {
+            if (imagePanel1.po != null) {
+                if (imagePanel1.po.removeLastPoint() == 0) {
                     imagePanel1.po = null;
                     imagePanel1.mode = ImagePanel.Mode.AddPoly;
                     imagePanel1.updateUI();
                     setUndo(false);
                     setRedo(false);
-                    
+
                 } else {
                     setRedo(true);
                 }
-            } 
+            }
         }
     }
-    
+
     public void redoPoint() {
-        if(imagePanel1.mode == ImagePanel.Mode.AddPoint) {
-            if(imagePanel1.po != null) {
-                if(imagePanel1.po.redo() == 0) {
-                   
+        if (imagePanel1.mode == ImagePanel.Mode.AddPoint) {
+            if (imagePanel1.po != null) {
+                if (imagePanel1.po.redo() == 0) {
+
                     imagePanel1.mode = ImagePanel.Mode.AddPoint;
                     imagePanel1.updateUI();
                     setUndo(true);
@@ -231,7 +231,7 @@ public class LABELTEST extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void quit() {
         int dialogResult = 0;
         if (_unsavedChanges == true) {
@@ -247,7 +247,7 @@ public class LABELTEST extends javax.swing.JFrame {
         imagePanel1.setEdit();
         jButton8.getModel().setPressed(false);
         jButton9.getModel().setPressed(true);
-        
+
     }
 
     private void drawMode() {
@@ -255,7 +255,7 @@ public class LABELTEST extends javax.swing.JFrame {
         imagePanel1.setDraw();
         jButton8.getModel().setPressed(true);
         jButton9.getModel().setPressed(false);
-        
+
     }
 
     private class MyRenderer extends DefaultTreeCellRenderer {
