@@ -54,6 +54,7 @@ public class LABELTEST extends javax.swing.JFrame {
      * Creates new form LABELTEST
      */
     public LABELTEST() {
+        super("Image Labeler");
         initComponents();
 
         setRedo(false);
@@ -153,6 +154,11 @@ public class LABELTEST extends javax.swing.JFrame {
     public void showHelp() {
         HelpWindow a = new HelpWindow("HELP", "help/help.html");
         a.setVisible(true);
+    }
+    
+    public void showAbout() {
+        About b = new About();
+        b.setVisible(true);
     }
 
     public void removeNodes() {
@@ -390,6 +396,7 @@ public class LABELTEST extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -569,6 +576,16 @@ public class LABELTEST extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem5);
 
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test/Icons/about_small.png"))); // NOI18N
+        jMenuItem6.setText("About");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem6);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -668,6 +685,11 @@ public class LABELTEST extends javax.swing.JFrame {
         drawMode();
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        showAbout();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -723,6 +745,7 @@ public class LABELTEST extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator1;
