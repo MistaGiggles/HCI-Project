@@ -13,10 +13,11 @@ import javax.swing.filechooser.*;
  * @author Matthew Shepherd <s0935850> and Robert Evans <s0949775>
  */
 public class ImageFileView extends FileView {
-    ImageIcon jpgIcon = Utils.createImageIcon(System.getProperty("user.dir")+"/src/test/Icons/jpgIcon.gif");
-    ImageIcon gifIcon = Utils.createImageIcon("/icons/gifIcon.gif");
-    ImageIcon tiffIcon = Utils.createImageIcon("/icons/tiffIcon.gif");
-    ImageIcon pngIcon = Utils.createImageIcon("/icons/pngIcon.png");
+    ImageIcon jpegIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/Icons/file-extension-jpeg-icon.png");
+    ImageIcon jpgIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/Icons/file-extension-jpg-icon.png");
+    ImageIcon gifIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/icons/file-extension-gif-icon.png");
+    ImageIcon tiffIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/icons/file-extension-tif-icon.png");
+    ImageIcon pngIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/icons/file-extension-png-icon.png");
  
     public String getName(File f) {
         return null; //let the L&F FileView figure this out
@@ -35,9 +36,11 @@ public class ImageFileView extends FileView {
         String type = null;
  
         if (extension != null) {
-            if (extension.equals(Utils.jpeg) ||
-                extension.equals(Utils.jpg)) {
+            if (extension.equals(Utils.jpeg)) {
                 type = "JPEG Image";
+            } else if(extension.equals(Utils.jpg)) {
+                
+                type = "JPG Image";
             } else if (extension.equals(Utils.gif)){
                 type = "GIF Image";
             } else if (extension.equals(Utils.tiff) ||
@@ -55,8 +58,9 @@ public class ImageFileView extends FileView {
         Icon icon = null;
  
         if (extension != null) {
-            if (extension.equals(Utils.jpeg) ||
-                extension.equals(Utils.jpg)) {
+            if (extension.equals(Utils.jpeg)) {
+                icon = jpegIcon;
+            } else if (extension.equals(Utils.jpg)) {
                 icon = jpgIcon;
             } else if (extension.equals(Utils.gif)) {
                 icon = gifIcon;
@@ -67,6 +71,7 @@ public class ImageFileView extends FileView {
                 icon = pngIcon;
             }
         }
+        
         return icon;
     }
 }

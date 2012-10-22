@@ -96,7 +96,7 @@ public class ObjectManager {
     
     public void clear() {
         objects = new ArrayList<PolygonObject>();
-        
+        update();
     }
 
     /*

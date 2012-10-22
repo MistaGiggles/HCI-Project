@@ -43,7 +43,7 @@ public class XMLReader {
      */
     public void openXML(ObjectManager manager, double scale) {
 
-
+        manager.clear();
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
