@@ -359,6 +359,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     public double loadImage(String file) {
 
         image = null;
+        this.scale = 1;
         try {
             image = ImageIO.read(new File(file));
         } catch (IOException e) {

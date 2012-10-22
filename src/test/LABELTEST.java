@@ -213,8 +213,8 @@ public class LABELTEST extends javax.swing.JFrame {
             c.setAcceptAllFileFilterUsed(false);
  
         //Add custom icons for file types.
-            c.setFileView(new ImageFileView());
- 
+           c.setFileView(new ImageFileView());
+         
         //Add the preview pane.
             c.setAccessory(new ImagePreview(c));
         int rVal = c.showOpenDialog(LABELTEST.this);
