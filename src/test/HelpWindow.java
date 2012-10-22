@@ -93,8 +93,7 @@ public class HelpWindow extends JFrame implements HyperlinkListener {
                 help.setEditable(false);
                 help.addHyperlinkListener(this);
                 JScrollPane scroller = new JScrollPane();
-                scroller.setBorder(BorderFactory.createTitledBorder(windowName
-                        + " Help"));
+                scroller.setBorder(BorderFactory.createTitledBorder("Help"));
                 scroller.getViewport().add(help);
                 cp.add(BorderLayout.CENTER, scroller);
                 addWindowListener(new WindowAdapter() {
