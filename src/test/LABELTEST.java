@@ -205,7 +205,7 @@ public class LABELTEST extends javax.swing.JFrame {
             //The description of this filter
 
             public String getDescription() {
-                return "Just Images";
+                return "Images";
             }
                 
             });
