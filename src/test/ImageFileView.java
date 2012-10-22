@@ -15,9 +15,9 @@ import javax.swing.filechooser.*;
 public class ImageFileView extends FileView {
     ImageIcon jpegIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/Icons/file-extension-jpeg-icon.png");
     ImageIcon jpgIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/Icons/file-extension-jpg-icon.png");
-    ImageIcon gifIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/icons/file-extension-gif-icon.png");
-    ImageIcon tiffIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/icons/file-extension-tif-icon.png");
-    ImageIcon pngIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/icons/file-extension-png-icon.png");
+    ImageIcon gifIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/Icons/file-extension-gif-icon.png");
+    ImageIcon tiffIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/Icons/file-extension-tif-icon.png");
+    ImageIcon pngIcon = Utils.createImageIcon(System.getProperty("user.dir") + "/src/test/Icons/file-extension-png-icon.png");
  
     public String getName(File f) {
         return null; //let the L&F FileView figure this out
