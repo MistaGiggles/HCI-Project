@@ -13,10 +13,10 @@ import javax.swing.filechooser.*;
  * @author Matthew Shepherd <s0935850> and Robert Evans <s0949775>
  */
 public class ImageFileView extends FileView {
-    ImageIcon jpgIcon = Utils.createImageIcon("images/jpgIcon.gif");
-    ImageIcon gifIcon = Utils.createImageIcon("images/gifIcon.gif");
-    ImageIcon tiffIcon = Utils.createImageIcon("images/tiffIcon.gif");
-    ImageIcon pngIcon = Utils.createImageIcon("images/pngIcon.png");
+    ImageIcon jpgIcon = Utils.createImageIcon(System.getProperty("user.dir")+"/src/test/Icons/jpgIcon.gif");
+    ImageIcon gifIcon = Utils.createImageIcon("/icons/gifIcon.gif");
+    ImageIcon tiffIcon = Utils.createImageIcon("/icons/tiffIcon.gif");
+    ImageIcon pngIcon = Utils.createImageIcon("/icons/pngIcon.png");
  
     public String getName(File f) {
         return null; //let the L&F FileView figure this out

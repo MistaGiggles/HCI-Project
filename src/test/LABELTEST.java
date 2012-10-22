@@ -175,7 +175,7 @@ public class LABELTEST extends javax.swing.JFrame {
 
     private void open() {
 
-        JFileChooser c = new JFileChooser();
+        JFileChooser c = new JFileChooser(".");
         //Add a custom file filter and disable the default
         //(Accept All) file filter.
             c.setFileFilter(new FileFilter(){
