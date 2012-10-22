@@ -63,12 +63,14 @@ public class XMLReader {
             //se.printStackTrace();
             return;
         } catch (IOException ioe) {
+            manager.clear();
+            
             //ioe.printStackTrace();
             return;
         }
 
         //System.out.println("LOADED");
-        manager.objects = new ArrayList<PolygonObject>();
+        
 
         Element docEle = dom.getDocumentElement();
 
