@@ -93,6 +93,11 @@ public class ObjectManager {
         update();
 
     }
+    
+    public void clear() {
+        objects = new ArrayList<PolygonObject>();
+        
+    }
 
     /*
      * Selects a polygon to be highlighted on the tree and to be made editable
