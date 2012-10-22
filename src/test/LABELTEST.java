@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
@@ -168,6 +170,47 @@ public class LABELTEST extends javax.swing.JFrame {
     private void open() {
 
         JFileChooser c = new JFileChooser();
+        //Add a custom file filter and disable the default
+        //(Accept All) file filter.
+            c.setFileFilter(new FileFilter(){
+                
+                public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                }
+
+                String extension = Utils.getExtension(f);
+                if (extension != null) {
+                    if (extension.equals(Utils.tiff) ||
+                        extension.equals(Utils.tif) ||
+                        extension.equals(Utils.gif) ||
+                        extension.equals(Utils.jpeg) ||
+                        extension.equals(Utils.jpg) ||
+                        extension.equals(Utils.png)) {
+                            return true;
+                    } else {
+                        return false;
+                    }
+                }
+
+                return false;
+            }
+
+            //The description of this filter
+
+            public String getDescription() {
+                return "Just Images";
+            }
+                
+            });
+            
+            c.setAcceptAllFileFilterUsed(false);
+ 
+        //Add custom icons for file types.
+            c.setFileView(new ImageFileView());
+ 
+        //Add the preview pane.
+            c.setAccessory(new ImagePreview(c));
         int rVal = c.showOpenDialog(LABELTEST.this);
         if (rVal == JFileChooser.APPROVE_OPTION) {
             filepath = (c.getSelectedFile().getPath());
