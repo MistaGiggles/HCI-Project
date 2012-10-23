@@ -299,7 +299,7 @@ public class LABELTEST extends javax.swing.JFrame {
         }
     }
 
-    private void editMode() {
+    public void editMode() {
         imagePanel1.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
         imagePanel1.setEdit();
         jButton8.getModel().setPressed(false);
@@ -307,7 +307,7 @@ public class LABELTEST extends javax.swing.JFrame {
 
     }
 
-    private void drawMode() {
+    public void drawMode() {
         imagePanel1.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         imagePanel1.setDraw();
         jButton8.getModel().setPressed(true);

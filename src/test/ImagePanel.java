@@ -363,6 +363,8 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
 
     public double loadImage(String file) {
         global = GlobalMode.EditMode;
+        //setEdit();
+        lb.drawMode();
         image = null;
         this.scale = 1;
         try {
