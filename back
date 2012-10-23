@@ -1,0 +1,10 @@
+<target name="run">
+       <java classname="test.LABELTEST" fork="true">
+         
+         <classpath>
+            <pathelement location="build/classes/" />
+           <pathelement location="lib/swing-layout-1.0.4.jar"/>
+           <pathelement path="${java.class.path}"/>
+         </classpath>
+       </java>
+    </target>

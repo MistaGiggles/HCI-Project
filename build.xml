@@ -9,6 +9,18 @@
 <!-- in the project's Project Properties dialog box.-->
 <project name="Test" default="default" basedir=".">
     <description>Builds, tests, and runs the project Test.</description>
+
+    <target name="run">
+       <java classname="test.LABELTEST" fork="true">
+         
+         <classpath>
+            <pathelement location="build/classes/" />
+           <pathelement location="lib/swing-layout-1.0.4.jar"/>
+           <pathelement path="${java.class.path}"/>
+         </classpath>
+       </java>
+    </target>
+
     <import file="nbproject/build-impl.xml"/>
     <!--
 
