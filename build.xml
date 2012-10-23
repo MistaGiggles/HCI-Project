@@ -7,10 +7,10 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="Test" default="default" basedir=".">
+<project name="Test" default="default" basedir="." >
     <description>Builds, tests, and runs the project Test.</description>
 
-    <target name="run">
+    <target name="run" depends="compile">
        <java classname="test.LABELTEST" fork="true">
          
          <classpath>
