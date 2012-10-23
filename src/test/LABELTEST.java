@@ -143,12 +143,12 @@ public class LABELTEST extends javax.swing.JFrame {
         imagePanel1.manager.model = treeModel;
 
         // Load in in image and label set
-        double scale = imagePanel1.loadImage(filepath);
-        XMLReader rd = new XMLReader(filepath + ".xml");
-        removeNodes();
-        rd.openXML(imagePanel1.manager, scale);
+        //double scale = imagePanel1.loadImage(filepath);
+        //XMLReader rd = new XMLReader(filepath + ".xml");
+        //removeNodes();
+        //rd.openXML(imagePanel1.manager, scale);
         setUnsavedChanges(false);
-        drawMode();
+        //drawMode();
 
     }
 
@@ -300,7 +300,7 @@ public class LABELTEST extends javax.swing.JFrame {
         }
     }
 
-    private void editMode() {
+    public void editMode() {
         imagePanel1.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
         imagePanel1.setEdit();
         jButton8.getModel().setPressed(false);
@@ -308,7 +308,7 @@ public class LABELTEST extends javax.swing.JFrame {
 
     }
 
-    private void drawMode() {
+    public void drawMode() {
         imagePanel1.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         imagePanel1.setDraw();
         jButton8.getModel().setPressed(true);
