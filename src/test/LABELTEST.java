@@ -142,12 +142,12 @@ public class LABELTEST extends javax.swing.JFrame {
         imagePanel1.manager.model = treeModel;
 
         // Load in in image and label set
-        double scale = imagePanel1.loadImage(filepath);
-        XMLReader rd = new XMLReader(filepath + ".xml");
-        removeNodes();
-        rd.openXML(imagePanel1.manager, scale);
+        //double scale = imagePanel1.loadImage(filepath);
+        //XMLReader rd = new XMLReader(filepath + ".xml");
+        //removeNodes();
+        //rd.openXML(imagePanel1.manager, scale);
         setUnsavedChanges(false);
-        drawMode();
+        //drawMode();
 
     }
 

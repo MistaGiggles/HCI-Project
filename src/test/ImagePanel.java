@@ -34,7 +34,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
 
     public enum GlobalMode {
 
-        DrawMode, EditMode
+        DrawMode, EditMode, Init
     };
     BufferedImage image;
     PolygonObject po;
@@ -54,7 +54,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     public ImagePanel() {
         super();
         po = null;
-        global = GlobalMode.DrawMode;
+        global = GlobalMode.Init;
         mode = Mode.AddPoly;
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -78,18 +78,22 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     }
 
     public void setEdit() {
-        if (mode == Mode.AddPoint) {
-            po = null;
-        }
-        global = GlobalMode.EditMode;
-        mode = Mode.EditPoly;
+         if(global != GlobalMode.Init) {
+            if (mode == Mode.AddPoint) {
+                po = null;
+            }
+            global = GlobalMode.EditMode;
+            mode = Mode.EditPoly;
+         }
     }
 
     public void setDraw() {
-        global = GlobalMode.DrawMode;
-        if (mode == Mode.AddPoint) {
-        } else {
-            mode = Mode.AddPoly;
+        if(global != GlobalMode.Init) {
+            global = GlobalMode.DrawMode;
+            if (mode == Mode.AddPoint) {
+            } else {
+                mode = Mode.AddPoly;
+            }
         }
     }
 
@@ -247,6 +251,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
                         case AddPoint:
                             if (po != null) {
                                 if (Point.dist(new Point(e.getX(), e.getY()), first) < 10) {
+                                    if(po.points.size() < 3) {return;}
                                     po.generatePoly();
                                     mode = Mode.View;
                                     po.setName("DEFAULT");
@@ -357,7 +362,7 @@ public class ImagePanel extends JPanel implements MouseListener, MouseMotionList
     }
 
     public double loadImage(String file) {
-
+        global = GlobalMode.EditMode;
         image = null;
         this.scale = 1;
         try {
