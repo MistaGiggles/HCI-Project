@@ -60,6 +60,7 @@ public class LABELTEST extends javax.swing.JFrame {
         super("Image Labeler");
         initComponents();
         
+        // This code sets the behavour when the application is closing
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
